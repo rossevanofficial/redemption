@@ -1,0 +1,343 @@
+<!-- =========================
+     REDEMPTION — HERO SECTION
+     Ash & Ember / Prologue House Silhouette
+========================== -->
+
+<section id="hero" aria-label="Redemption hero">
+  <!-- Ember particles -->
+  <canvas id="embers" aria-hidden="true"></canvas>
+
+  <!-- Background layers -->
+  <div class="hero-bg" aria-hidden="true">
+    <div class="hero-smoke"></div>
+    <div class="hero-vignette"></div>
+    <div class="hero-house"></div>
+  </div>
+
+  <!-- Foreground content -->
+  <div class="hero-content">
+    <p class="hero-kicker">A dark fantasy thriller</p>
+    <h1 class="hero-title">REDEMPTION</h1>
+
+    <p class="hero-tagline">
+      <span>Some fires destroy.</span><br />
+      <span>Others choose.</span>
+    </p>
+
+    <div class="hero-cta">
+      <a class="btn btn-primary" href="#read">Read the Story</a>
+      <a class="btn btn-ghost" href="#characters">Meet the Characters</a>
+    </div>
+  </div>
+
+  <!-- Scroll cue -->
+  <div class="hero-scroll" aria-hidden="true">
+    <span></span>
+  </div>
+</section>
+
+<style>
+  :root{
+    --bg0:#070a10;
+    --bg1:#0b0f19;
+    --smoke:#101725;
+    --ash:#a9b3c6;
+    --muted:#77819a;
+    --ember:#ff7a1a;
+    --ember2:#ffd089;
+  }
+
+  /* HERO LAYOUT */
+  #hero{
+    position:relative;
+    min-height:92vh;
+    display:flex;
+    align-items:center;
+    overflow:hidden;
+    background: radial-gradient(1200px 700px at 18% 35%, rgba(255,122,26,.09), transparent 60%),
+                radial-gradient(900px 600px at 75% 25%, rgba(255,208,137,.05), transparent 55%),
+                linear-gradient(180deg, var(--bg0), var(--bg1));
+  }
+
+  /* Canvas sits above background but below content */
+  #embers{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    z-index:2;
+    pointer-events:none;
+    opacity:.9;
+  }
+
+  .hero-bg{
+    position:absolute;
+    inset:0;
+    z-index:1;
+    transform: translateY(0px);
+    will-change: transform;
+  }
+
+  /* Subtle smoke haze */
+  .hero-smoke{
+    position:absolute;
+    inset:-20%;
+    background:
+      radial-gradient(closest-side at 20% 30%, rgba(255,255,255,.05), transparent 60%),
+      radial-gradient(closest-side at 70% 45%, rgba(255,255,255,.04), transparent 62%),
+      radial-gradient(closest-side at 45% 65%, rgba(255,255,255,.03), transparent 62%),
+      radial-gradient(closest-side at 85% 75%, rgba(255,255,255,.03), transparent 65%);
+    filter: blur(24px);
+    opacity:.35;
+    animation: smokeDrift 18s ease-in-out infinite alternate;
+    mix-blend-mode: screen;
+  }
+
+  @keyframes smokeDrift{
+    from { transform: translate3d(-1.5%, 0.5%, 0); }
+    to   { transform: translate3d( 1.5%,-0.5%, 0); }
+  }
+
+  /* Vignette for cinematic focus */
+  .hero-vignette{
+    position:absolute;
+    inset:0;
+    background: radial-gradient(900px 520px at 28% 42%, transparent 35%, rgba(0,0,0,.55) 85%),
+                radial-gradient(closest-side at 50% 50%, rgba(0,0,0,.0), rgba(0,0,0,.45));
+    opacity:.9;
+  }
+
+  /* House silhouette layer (SVG background) */
+  .hero-house{
+    position:absolute;
+    inset:0;
+    background-repeat:no-repeat;
+    background-position: 70% 62%;
+    background-size: min(920px, 95vw);
+    opacity:.55;
+    filter: blur(.2px);
+    transform: translateY(0px);
+    will-change: transform;
+
+    /* Inline SVG: simple colonial silhouette (swap later with your exact prologue house if desired) */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 700'%3E%3Cdefs%3E%3CradialGradient id='g' cx='50%25' cy='50%25' r='70%25'%3E%3Cstop offset='0%25' stop-color='%23ffffff' stop-opacity='.18'/%3E%3Cstop offset='70%25' stop-color='%23ffffff' stop-opacity='.06'/%3E%3Cstop offset='100%25' stop-color='%23ffffff' stop-opacity='0'/%3E%3C/radialGradient%3E%3C/defs%3E%3Crect width='1200' height='700' fill='none'/%3E%3Cpath d='M250 470 L310 420 L310 390 L350 390 L350 410 L470 320 L590 410 L590 390 L630 390 L630 420 L690 470 L690 560 L250 560 Z' fill='%23000000' fill-opacity='.62'/%3E%3Cpath d='M310 470 L310 560 M380 470 L380 560 M450 470 L450 560 M520 470 L520 560 M590 470 L590 560' stroke='%23000000' stroke-opacity='.35' stroke-width='18'/%3E%3Crect x='290' y='500' width='120' height='60' fill='%23000000' fill-opacity='.55'/%3E%3Crect x='455' y='500' width='80' height='60' fill='%23000000' fill-opacity='.55'/%3E%3Crect x='575' y='500' width='80' height='60' fill='%23000000' fill-opacity='.55'/%3E%3Crect x='410' y='430' width='70' height='45' fill='%23000000' fill-opacity='.55'/%3E%3Crect x='515' y='430' width='70' height='45' fill='%23000000' fill-opacity='.55'/%3E%3Cellipse cx='480' cy='520' rx='520' ry='260' fill='url(%23g)'/%3E%3C/svg%3E");
+  }
+
+  /* CONTENT */
+  .hero-content{
+    position:relative;
+    z-index:3;
+    max-width: 980px;
+    padding: clamp(28px, 4vw, 56px);
+    margin-left: clamp(16px, 6vw, 92px);
+  }
+
+  .hero-kicker{
+    margin:0 0 10px;
+    color: rgba(169,179,198,.85);
+    letter-spacing:.18em;
+    text-transform: uppercase;
+    font-size: 12px;
+  }
+
+  .hero-title{
+    margin:0;
+    font-weight: 800;
+    letter-spacing:.04em;
+    line-height: .95;
+    color: #eef2ff;
+    font-size: clamp(56px, 7vw, 92px);
+    text-shadow: 0 10px 26px rgba(0,0,0,.55);
+  }
+
+  .hero-tagline{
+    margin: 18px 0 26px;
+    color: rgba(238,242,255,.92);
+    font-size: clamp(18px, 2.2vw, 24px);
+    line-height: 1.35;
+    max-width: 520px;
+  }
+
+  .hero-tagline span:first-child{
+    color: rgba(255,208,137,.92);
+  }
+
+  .hero-cta{
+    display:flex;
+    gap:12px;
+    flex-wrap:wrap;
+    margin-top: 10px;
+  }
+
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    padding: 12px 16px;
+    border-radius: 14px;
+    text-decoration:none;
+    font-weight: 650;
+    letter-spacing:.01em;
+    transition: transform .18s ease, box-shadow .18s ease, background .18s ease, border-color .18s ease;
+    user-select:none;
+  }
+
+  .btn-primary{
+    color:#0b0f19;
+    background: linear-gradient(180deg, rgba(255,208,137,1), rgba(255,122,26,1));
+    box-shadow: 0 18px 30px rgba(0,0,0,.35);
+  }
+  .btn-primary:hover{ transform: translateY(-1px); box-shadow: 0 24px 40px rgba(0,0,0,.45); }
+
+  .btn-ghost{
+    color: rgba(238,242,255,.92);
+    background: rgba(255,255,255,.06);
+    border: 1px solid rgba(255,255,255,.10);
+    backdrop-filter: blur(10px);
+  }
+  .btn-ghost:hover{ transform: translateY(-1px); border-color: rgba(255,208,137,.35); }
+
+  /* Scroll cue */
+  .hero-scroll{
+    position:absolute;
+    left: 50%;
+    bottom: 18px;
+    transform: translateX(-50%);
+    z-index:3;
+    opacity:.75;
+  }
+  .hero-scroll span{
+    display:block;
+    width: 22px;
+    height: 36px;
+    border-radius: 18px;
+    border: 1px solid rgba(255,255,255,.25);
+    position:relative;
+  }
+  .hero-scroll span::after{
+    content:"";
+    position:absolute;
+    left:50%;
+    top:8px;
+    width: 4px;
+    height: 6px;
+    border-radius: 3px;
+    transform: translateX(-50%);
+    background: rgba(255,208,137,.85);
+    animation: scrollDot 1.4s ease-in-out infinite;
+  }
+  @keyframes scrollDot{
+    0%{ opacity:0; transform: translate(-50%,0); }
+    25%{ opacity:1; }
+    70%{ opacity:1; transform: translate(-50%,12px); }
+    100%{ opacity:0; transform: translate(-50%,16px); }
+  }
+
+  /* Responsive tweak */
+  @media (max-width: 720px){
+    .hero-content{ margin-left: 0; }
+    .hero-house{ background-position: 62% 72%; opacity:.45; }
+  }
+</style>
+
+<script>
+  // ---------------------------
+  // Parallax (background + house)
+  // ---------------------------
+  (function(){
+    const bg = document.querySelector('.hero-bg');
+    const house = document.querySelector('.hero-house');
+
+    function onScroll(){
+      const y = window.scrollY || 0;
+      // subtle parallax
+      bg.style.transform = `translateY(${y * 0.10}px)`;
+      house.style.transform = `translateY(${y * 0.16}px)`;
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  })();
+
+  // ---------------------------
+  // Embers (lightweight canvas particles)
+  // ---------------------------
+  (function(){
+    const canvas = document.getElementById('embers');
+    const ctx = canvas.getContext('2d', { alpha: true });
+
+    let w, h, dpr;
+    let particles = [];
+    const count = 110; // tweak density
+
+    function resize(){
+      dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
+      w = canvas.clientWidth = canvas.parentElement.clientWidth;
+      h = canvas.clientHeight = canvas.parentElement.clientHeight;
+      canvas.width = Math.floor(w * dpr);
+      canvas.height = Math.floor(h * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+
+    function rand(min, max){ return Math.random() * (max - min) + min; }
+
+    function makeParticle(resetToBottom = true){
+      const p = {
+        x: rand(0, w),
+        y: resetToBottom ? rand(h * 0.60, h + 60) : rand(0, h),
+        r: rand(0.6, 2.0),
+        vy: rand(0.12, 0.55),
+        vx: rand(-0.10, 0.10),
+        life: rand(0.35, 1.0),
+        flicker: rand(0.6, 1.0),
+        hue: rand(18, 38),        // ember orange range
+        sat: rand(70, 95),
+        light: rand(55, 70)
+      };
+      return p;
+    }
+
+    function init(){
+      particles = [];
+      for(let i=0;i<count;i++) particles.push(makeParticle(false));
+    }
+
+    function draw(){
+      ctx.clearRect(0,0,w,h);
+
+      // slight global haze so particles blend cinematically
+      ctx.globalCompositeOperation = 'lighter';
+
+      for(const p of particles){
+        // motion
+        p.y -= p.vy;
+        p.x += p.vx + Math.sin((p.y + p.x) * 0.002) * 0.08;
+
+        // fade in/out
+        p.flicker += rand(-0.03, 0.03);
+        p.flicker = Math.max(0.55, Math.min(1.0, p.flicker));
+
+        // wrap / respawn
+        if(p.y < -30 || p.x < -50 || p.x > w + 50){
+          Object.assign(p, makeParticle(true));
+        }
+
+        // render
+        const alpha = 0.18 * p.life * p.flicker;
+        const grd = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r * 6);
+        grd.addColorStop(0, `hsla(${p.hue}, ${p.sat}%, ${p.light}%, ${alpha})`);
+        grd.addColorStop(1, `hsla(${p.hue}, ${p.sat}%, ${p.light}%, 0)`);
+
+        ctx.fillStyle = grd;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r * 6, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      ctx.globalCompositeOperation = 'source-over';
+      requestAnimationFrame(draw);
+    }
+
+    window.addEventListener('resize', () => { resize(); init(); }, { passive: true });
+    resize(); init(); draw();
+  })();
+</script>
