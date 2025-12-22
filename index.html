@@ -1,22 +1,25 @@
 <!-- =========================
      REDEMPTION — HERO SECTION
-     Ash & Ember / Prologue House Silhouette
+     Ash & Ember / Prologue Art (Real Image)
 ========================== -->
 
-<section id="hero" aria-label="Redemption hero">
+<section id="hero" aria-label="Redemption hero" class="hero-art"
+  style="--hero-img: url('../assets/redemption/hero-prologue-house.png');">
+
   <!-- Ember particles -->
   <canvas id="embers" aria-hidden="true"></canvas>
 
   <!-- Background layers -->
   <div class="hero-bg" aria-hidden="true">
     <div class="hero-smoke"></div>
+    <div class="hero-rain"></div>
     <div class="hero-vignette"></div>
-    <div class="hero-house"></div>
+    <div class="hero-image"></div>
   </div>
 
   <!-- Foreground content -->
   <div class="hero-content">
-    <p class="hero-kicker">A dark fantasy thriller</p>
+    <p class="hero-kicker">Written by Ross Evans</p>
     <h1 class="hero-title">REDEMPTION</h1>
 
     <p class="hero-tagline">
@@ -26,13 +29,47 @@
 
     <div class="hero-cta">
       <a class="btn btn-primary" href="#read">Read the Story</a>
-      <a class="btn btn-ghost" href="#characters">Meet the Characters</a>
+      <a class="btn btn-ghost" href="#prologue">This is where the story began</a>
     </div>
   </div>
 
   <!-- Scroll cue -->
   <div class="hero-scroll" aria-hidden="true">
     <span></span>
+  </div>
+</section>
+
+<!-- =========================
+     PROLOGUE SECTION
+========================== -->
+<section id="prologue" class="section-prologue" aria-label="Prologue scene">
+  <div class="container">
+    <p class="section-kicker">PROLOGUE</p>
+    <h2 class="section-title">THIS IS WHERE THE STORY BEGAN</h2>
+
+    <div class="prologue-media">
+      <img
+        src="../assets/redemption/scene-french-doors.png"
+        alt="Freya, Steve, and Jack outside the French doors as Steve forces entry in the rain."
+        loading="lazy"
+      />
+      <div class="prologue-overlay" aria-hidden="true"></div>
+      <div class="prologue-caption">
+        Rain. Marble. Warm light behind glass. <span class="accent">And something that already felt wrong.</span>
+      </div>
+    </div>
+
+    <div class="prologue-copy">
+      <p>
+        Freya stood with Steve and Jack at the rear of the two-story house, staring at the towering white-marble staircase
+        that led from the patio down to the pool. Water streamed along the curved marble railings and dripped in clear beads
+        from the ornate stonework—elegant, sterile.
+      </p>
+      <p class="small">
+        Dark clouds smothered the moon. Rain pattered against the pool in soft, rhythmic taps.
+        Inside, several lights glowed behind tall French doors—warm, golden, alive.
+      </p>
+    </div>
   </div>
 </section>
 
@@ -45,6 +82,15 @@
     --muted:#77819a;
     --ember:#ff7a1a;
     --ember2:#ffd089;
+
+    --max: 1120px;
+    --radius: 18px;
+    --radius2: 26px;
+  }
+
+  .container{
+    width: min(var(--max), calc(100% - 40px));
+    margin: 0 auto;
   }
 
   /* HERO LAYOUT */
@@ -98,6 +144,31 @@
     to   { transform: translate3d( 1.5%,-0.5%, 0); }
   }
 
+  /* Rain overlay */
+  .hero-rain{
+    position:absolute;
+    inset:-20%;
+    z-index:2;
+    pointer-events:none;
+    opacity:.22;
+    background-image:
+      repeating-linear-gradient(
+        115deg,
+        rgba(255,255,255,.22) 0px,
+        rgba(255,255,255,.22) 1px,
+        rgba(255,255,255,0) 2px,
+        rgba(255,255,255,0) 10px
+      );
+    filter: blur(.2px);
+    animation: rainFall 1.2s linear infinite;
+    mix-blend-mode: screen;
+  }
+
+  @keyframes rainFall{
+    from { background-position: 0 0; }
+    to   { background-position: 0 240px; }
+  }
+
   /* Vignette for cinematic focus */
   .hero-vignette{
     position:absolute;
@@ -105,22 +176,23 @@
     background: radial-gradient(900px 520px at 28% 42%, transparent 35%, rgba(0,0,0,.55) 85%),
                 radial-gradient(closest-side at 50% 50%, rgba(0,0,0,.0), rgba(0,0,0,.45));
     opacity:.9;
+    z-index:2;
+    pointer-events:none;
   }
 
-  /* House silhouette layer (SVG background) */
-  .hero-house{
+  /* REAL HERO IMAGE (replaces silhouette) */
+  .hero-image{
     position:absolute;
     inset:0;
-    background-repeat:no-repeat;
-    background-position: 70% 62%;
-    background-size: min(920px, 95vw);
-    opacity:.55;
-    filter: blur(.2px);
-    transform: translateY(0px);
+    z-index:1;
+    background-image: var(--hero-img);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity:.92;
+    filter: saturate(1.05) contrast(1.08) brightness(.78);
+    transform: translateY(0px) scale(1.02);
     will-change: transform;
-
-    /* Inline SVG: simple colonial silhouette (swap later with your exact prologue house if desired) */
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 700'%3E%3Cdefs%3E%3CradialGradient id='g' cx='50%25' cy='50%25' r='70%25'%3E%3Cstop offset='0%25' stop-color='%23ffffff' stop-opacity='.18'/%3E%3Cstop offset='70%25' stop-color='%23ffffff' stop-opacity='.06'/%3E%3Cstop offset='100%25' stop-color='%23ffffff' stop-opacity='0'/%3E%3C/radialGradient%3E%3C/defs%3E%3Crect width='1200' height='700' fill='none'/%3E%3Cpath d='M250 470 L310 420 L310 390 L350 390 L350 410 L470 320 L590 410 L590 390 L630 390 L630 420 L690 470 L690 560 L250 560 Z' fill='%23000000' fill-opacity='.62'/%3E%3Cpath d='M310 470 L310 560 M380 470 L380 560 M450 470 L450 560 M520 470 L520 560 M590 470 L590 560' stroke='%23000000' stroke-opacity='.35' stroke-width='18'/%3E%3Crect x='290' y='500' width='120' height='60' fill='%23000000' fill-opacity='.55'/%3E%3Crect x='455' y='500' width='80' height='60' fill='%23000000' fill-opacity='.55'/%3E%3Crect x='575' y='500' width='80' height='60' fill='%23000000' fill-opacity='.55'/%3E%3Crect x='410' y='430' width='70' height='45' fill='%23000000' fill-opacity='.55'/%3E%3Crect x='515' y='430' width='70' height='45' fill='%23000000' fill-opacity='.55'/%3E%3Cellipse cx='480' cy='520' rx='520' ry='260' fill='url(%23g)'/%3E%3C/svg%3E");
   }
 
   /* CONTENT */
@@ -233,26 +305,102 @@
     100%{ opacity:0; transform: translate(-50%,16px); }
   }
 
+  /* PROLOGUE SECTION */
+  .section-prologue{
+    padding: 78px 0 86px;
+    background: linear-gradient(180deg, rgba(7,10,16,0), rgba(0,0,0,.28));
+  }
+  .section-kicker{
+    margin:0 0 10px;
+    color: rgba(169,179,198,.72);
+    letter-spacing:.18em;
+    text-transform: uppercase;
+    font-size: 12px;
+  }
+  .section-title{
+    margin:0 0 16px;
+    font-weight: 800;
+    letter-spacing:.02em;
+    font-size: clamp(28px, 3.2vw, 44px);
+    color: rgba(238,242,255,.94);
+  }
+
+  .prologue-media{
+    position:relative;
+    border-radius: var(--radius2);
+    overflow:hidden;
+    border: 1px solid rgba(255,255,255,.10);
+    box-shadow: 0 26px 55px rgba(0,0,0,.45);
+    background: rgba(0,0,0,.25);
+  }
+
+  .prologue-media img{
+    width:100%;
+    height:auto;
+    display:block;
+    transform: scale(1.01);
+  }
+
+  .prologue-overlay{
+    position:absolute;
+    inset:0;
+    background:
+      radial-gradient(900px 420px at 20% 20%, rgba(255,208,137,.08), transparent 55%),
+      radial-gradient(900px 520px at 70% 65%, rgba(255,122,26,.06), transparent 60%),
+      linear-gradient(180deg, rgba(0,0,0,.18), rgba(0,0,0,.55));
+    pointer-events:none;
+  }
+
+  .prologue-caption{
+    position:absolute;
+    left: 18px;
+    right: 18px;
+    bottom: 16px;
+    padding: 12px 14px;
+    border-radius: 14px;
+    background: rgba(0,0,0,.35);
+    border: 1px solid rgba(255,255,255,.10);
+    backdrop-filter: blur(10px);
+    color: rgba(238,242,255,.90);
+    font-size: 14px;
+    line-height: 1.35;
+  }
+  .prologue-caption .accent{
+    color: rgba(255,208,137,.92);
+  }
+
+  .prologue-copy{
+    margin-top: 18px;
+    max-width: 860px;
+  }
+  .prologue-copy p{
+    margin: 0 0 10px;
+    color: rgba(169,179,198,.82);
+  }
+  .small{
+    font-size: 13px;
+    color: rgba(169,179,198,.62);
+  }
+
   /* Responsive tweak */
   @media (max-width: 720px){
     .hero-content{ margin-left: 0; }
-    .hero-house{ background-position: 62% 72%; opacity:.45; }
+    .hero-image{ background-position: 55% 50%; }
   }
 </style>
 
 <script>
   // ---------------------------
-  // Parallax (background + house)
+  // Parallax (background + hero image)
   // ---------------------------
   (function(){
     const bg = document.querySelector('.hero-bg');
-    const house = document.querySelector('.hero-house');
+    const heroImage = document.querySelector('.hero-image');
 
     function onScroll(){
       const y = window.scrollY || 0;
-      // subtle parallax
-      bg.style.transform = `translateY(${y * 0.10}px)`;
-      house.style.transform = `translateY(${y * 0.16}px)`;
+      if (bg) bg.style.transform = `translateY(${y * 0.10}px)`;
+      if (heroImage) heroImage.style.transform = `translateY(${y * 0.16}px) scale(1.02)`;
     }
     window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
@@ -267,7 +415,7 @@
 
     let w, h, dpr;
     let particles = [];
-    const count = 110; // tweak density
+    const count = 80; // more subtle for rain/night mood
 
     function resize(){
       dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
@@ -281,19 +429,18 @@
     function rand(min, max){ return Math.random() * (max - min) + min; }
 
     function makeParticle(resetToBottom = true){
-      const p = {
+      return {
         x: rand(0, w),
         y: resetToBottom ? rand(h * 0.60, h + 60) : rand(0, h),
         r: rand(0.6, 2.0),
-        vy: rand(0.12, 0.55),
+        vy: rand(0.08, 0.35),
         vx: rand(-0.10, 0.10),
         life: rand(0.35, 1.0),
         flicker: rand(0.6, 1.0),
-        hue: rand(18, 38),        // ember orange range
+        hue: rand(18, 38),
         sat: rand(70, 95),
         light: rand(55, 70)
       };
-      return p;
     }
 
     function init(){
@@ -303,25 +450,19 @@
 
     function draw(){
       ctx.clearRect(0,0,w,h);
-
-      // slight global haze so particles blend cinematically
       ctx.globalCompositeOperation = 'lighter';
 
       for(const p of particles){
-        // motion
         p.y -= p.vy;
         p.x += p.vx + Math.sin((p.y + p.x) * 0.002) * 0.08;
 
-        // fade in/out
         p.flicker += rand(-0.03, 0.03);
         p.flicker = Math.max(0.55, Math.min(1.0, p.flicker));
 
-        // wrap / respawn
         if(p.y < -30 || p.x < -50 || p.x > w + 50){
           Object.assign(p, makeParticle(true));
         }
 
-        // render
         const alpha = 0.18 * p.life * p.flicker;
         const grd = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r * 6);
         grd.addColorStop(0, `hsla(${p.hue}, ${p.sat}%, ${p.light}%, ${alpha})`);
