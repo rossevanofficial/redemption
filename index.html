@@ -1,9 +1,26 @@
-<!-- =========================
-     REDEMPTION — HERO SECTION
-     Ash & Ember / Prologue Art (Real Image)
-========================== -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Redemption — A Novel by Ross Evans</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<section id="hero" aria-label="Redemption hero" class="hero-art"
+  <meta name="description"
+        content="Redemption is a dark, cinematic thriller by Ross Evans. A story of fire, choice, and the cost of doing the right thing." />
+
+  <!-- Main site styles -->
+  <link rel="stylesheet" href="../web.css" />
+
+</head>
+<body>
+
+<!-- =========================
+     HERO SECTION
+========================== -->
+<section
+  id="hero"
+  class="hero-art"
+  aria-label="Redemption hero"
   style="--hero-img: url('../assets/redemption/hero-prologue-house.png');">
 
   <!-- Ember particles -->
@@ -28,7 +45,7 @@
     </p>
 
     <div class="hero-cta">
-      <a class="btn btn-primary" href="#read">Read the Story</a>
+      <a class="btn btn-primary" href="#prologue">Read the Story</a>
       <a class="btn btn-ghost" href="#prologue">This is where the story began</a>
     </div>
   </div>
@@ -44,6 +61,7 @@
 ========================== -->
 <section id="prologue" class="section-prologue" aria-label="Prologue scene">
   <div class="container">
+
     <p class="section-kicker">PROLOGUE</p>
     <h2 class="section-title">THIS IS WHERE THE STORY BEGAN</h2>
 
@@ -55,430 +73,41 @@
       />
       <div class="prologue-overlay" aria-hidden="true"></div>
       <div class="prologue-caption">
-        Rain. Marble. Warm light behind glass. <span class="accent">And something that already felt wrong.</span>
+        Rain. Marble. Warm light behind glass.
+        <span class="accent">And something that already felt wrong.</span>
       </div>
     </div>
 
     <div class="prologue-copy">
       <p>
-        Freya stood with Steve and Jack at the rear of the two-story house, staring at the towering white-marble staircase
-        that led from the patio down to the pool. Water streamed along the curved marble railings and dripped in clear beads
-        from the ornate stonework—elegant, sterile.
+        Freya stood with Steve and Jack at the rear of the two-story house, staring at the towering
+        white-marble staircase that led from the patio down to the pool. Water streamed along the
+        curved marble railings and dripped in clear beads from the ornate stonework—elegant, sterile.
       </p>
       <p class="small">
         Dark clouds smothered the moon. Rain pattered against the pool in soft, rhythmic taps.
         Inside, several lights glowed behind tall French doors—warm, golden, alive.
       </p>
     </div>
+
   </div>
 </section>
 
-<style>
-  :root{
-    --bg0:#070a10;
-    --bg1:#0b0f19;
-    --smoke:#101725;
-    --ash:#a9b3c6;
-    --muted:#77819a;
-    --ember:#ff7a1a;
-    --ember2:#ffd089;
+<!-- =========================
+     FUTURE SECTIONS PLACEHOLDER
+========================== -->
+<section id="read">
+  <div class="container">
+    <p class="section-kicker">THE STORY</p>
+    <h2 class="section-title">Redemption</h2>
+    <p class="small">
+      Full synopsis, sample chapters, and purchase links coming soon.
+    </p>
+  </div>
+</section>
 
-    --max: 1120px;
-    --radius: 18px;
-    --radius2: 26px;
-  }
+<!-- Main site scripts -->
+<script src="../web.js" defer></script>
 
-  .container{
-    width: min(var(--max), calc(100% - 40px));
-    margin: 0 auto;
-  }
-
-  /* HERO LAYOUT */
-  #hero{
-    position:relative;
-    min-height:92vh;
-    display:flex;
-    align-items:center;
-    overflow:hidden;
-    background: radial-gradient(1200px 700px at 18% 35%, rgba(255,122,26,.09), transparent 60%),
-                radial-gradient(900px 600px at 75% 25%, rgba(255,208,137,.05), transparent 55%),
-                linear-gradient(180deg, var(--bg0), var(--bg1));
-  }
-
-  /* Canvas sits above background but below content */
-  #embers{
-    position:absolute;
-    inset:0;
-    width:100%;
-    height:100%;
-    z-index:2;
-    pointer-events:none;
-    opacity:.9;
-  }
-
-  .hero-bg{
-    position:absolute;
-    inset:0;
-    z-index:1;
-    transform: translateY(0px);
-    will-change: transform;
-  }
-
-  /* Subtle smoke haze */
-  .hero-smoke{
-    position:absolute;
-    inset:-20%;
-    background:
-      radial-gradient(closest-side at 20% 30%, rgba(255,255,255,.05), transparent 60%),
-      radial-gradient(closest-side at 70% 45%, rgba(255,255,255,.04), transparent 62%),
-      radial-gradient(closest-side at 45% 65%, rgba(255,255,255,.03), transparent 62%),
-      radial-gradient(closest-side at 85% 75%, rgba(255,255,255,.03), transparent 65%);
-    filter: blur(24px);
-    opacity:.35;
-    animation: smokeDrift 18s ease-in-out infinite alternate;
-    mix-blend-mode: screen;
-  }
-
-  @keyframes smokeDrift{
-    from { transform: translate3d(-1.5%, 0.5%, 0); }
-    to   { transform: translate3d( 1.5%,-0.5%, 0); }
-  }
-
-  /* Rain overlay */
-  .hero-rain{
-    position:absolute;
-    inset:-20%;
-    z-index:2;
-    pointer-events:none;
-    opacity:.22;
-    background-image:
-      repeating-linear-gradient(
-        115deg,
-        rgba(255,255,255,.22) 0px,
-        rgba(255,255,255,.22) 1px,
-        rgba(255,255,255,0) 2px,
-        rgba(255,255,255,0) 10px
-      );
-    filter: blur(.2px);
-    animation: rainFall 1.2s linear infinite;
-    mix-blend-mode: screen;
-  }
-
-  @keyframes rainFall{
-    from { background-position: 0 0; }
-    to   { background-position: 0 240px; }
-  }
-
-  /* Vignette for cinematic focus */
-  .hero-vignette{
-    position:absolute;
-    inset:0;
-    background: radial-gradient(900px 520px at 28% 42%, transparent 35%, rgba(0,0,0,.55) 85%),
-                radial-gradient(closest-side at 50% 50%, rgba(0,0,0,.0), rgba(0,0,0,.45));
-    opacity:.9;
-    z-index:2;
-    pointer-events:none;
-  }
-
-  /* REAL HERO IMAGE (replaces silhouette) */
-  .hero-image{
-    position:absolute;
-    inset:0;
-    z-index:1;
-    background-image: var(--hero-img);
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    opacity:.92;
-    filter: saturate(1.05) contrast(1.08) brightness(.78);
-    transform: translateY(0px) scale(1.02);
-    will-change: transform;
-  }
-
-  /* CONTENT */
-  .hero-content{
-    position:relative;
-    z-index:3;
-    max-width: 980px;
-    padding: clamp(28px, 4vw, 56px);
-    margin-left: clamp(16px, 6vw, 92px);
-  }
-
-  .hero-kicker{
-    margin:0 0 10px;
-    color: rgba(169,179,198,.85);
-    letter-spacing:.18em;
-    text-transform: uppercase;
-    font-size: 12px;
-  }
-
-  .hero-title{
-    margin:0;
-    font-weight: 800;
-    letter-spacing:.04em;
-    line-height: .95;
-    color: #eef2ff;
-    font-size: clamp(56px, 7vw, 92px);
-    text-shadow: 0 10px 26px rgba(0,0,0,.55);
-  }
-
-  .hero-tagline{
-    margin: 18px 0 26px;
-    color: rgba(238,242,255,.92);
-    font-size: clamp(18px, 2.2vw, 24px);
-    line-height: 1.35;
-    max-width: 520px;
-  }
-
-  .hero-tagline span:first-child{
-    color: rgba(255,208,137,.92);
-  }
-
-  .hero-cta{
-    display:flex;
-    gap:12px;
-    flex-wrap:wrap;
-    margin-top: 10px;
-  }
-
-  .btn{
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
-    padding: 12px 16px;
-    border-radius: 14px;
-    text-decoration:none;
-    font-weight: 650;
-    letter-spacing:.01em;
-    transition: transform .18s ease, box-shadow .18s ease, background .18s ease, border-color .18s ease;
-    user-select:none;
-  }
-
-  .btn-primary{
-    color:#0b0f19;
-    background: linear-gradient(180deg, rgba(255,208,137,1), rgba(255,122,26,1));
-    box-shadow: 0 18px 30px rgba(0,0,0,.35);
-  }
-  .btn-primary:hover{ transform: translateY(-1px); box-shadow: 0 24px 40px rgba(0,0,0,.45); }
-
-  .btn-ghost{
-    color: rgba(238,242,255,.92);
-    background: rgba(255,255,255,.06);
-    border: 1px solid rgba(255,255,255,.10);
-    backdrop-filter: blur(10px);
-  }
-  .btn-ghost:hover{ transform: translateY(-1px); border-color: rgba(255,208,137,.35); }
-
-  /* Scroll cue */
-  .hero-scroll{
-    position:absolute;
-    left: 50%;
-    bottom: 18px;
-    transform: translateX(-50%);
-    z-index:3;
-    opacity:.75;
-  }
-  .hero-scroll span{
-    display:block;
-    width: 22px;
-    height: 36px;
-    border-radius: 18px;
-    border: 1px solid rgba(255,255,255,.25);
-    position:relative;
-  }
-  .hero-scroll span::after{
-    content:"";
-    position:absolute;
-    left:50%;
-    top:8px;
-    width: 4px;
-    height: 6px;
-    border-radius: 3px;
-    transform: translateX(-50%);
-    background: rgba(255,208,137,.85);
-    animation: scrollDot 1.4s ease-in-out infinite;
-  }
-  @keyframes scrollDot{
-    0%{ opacity:0; transform: translate(-50%,0); }
-    25%{ opacity:1; }
-    70%{ opacity:1; transform: translate(-50%,12px); }
-    100%{ opacity:0; transform: translate(-50%,16px); }
-  }
-
-  /* PROLOGUE SECTION */
-  .section-prologue{
-    padding: 78px 0 86px;
-    background: linear-gradient(180deg, rgba(7,10,16,0), rgba(0,0,0,.28));
-  }
-  .section-kicker{
-    margin:0 0 10px;
-    color: rgba(169,179,198,.72);
-    letter-spacing:.18em;
-    text-transform: uppercase;
-    font-size: 12px;
-  }
-  .section-title{
-    margin:0 0 16px;
-    font-weight: 800;
-    letter-spacing:.02em;
-    font-size: clamp(28px, 3.2vw, 44px);
-    color: rgba(238,242,255,.94);
-  }
-
-  .prologue-media{
-    position:relative;
-    border-radius: var(--radius2);
-    overflow:hidden;
-    border: 1px solid rgba(255,255,255,.10);
-    box-shadow: 0 26px 55px rgba(0,0,0,.45);
-    background: rgba(0,0,0,.25);
-  }
-
-  .prologue-media img{
-    width:100%;
-    height:auto;
-    display:block;
-    transform: scale(1.01);
-  }
-
-  .prologue-overlay{
-    position:absolute;
-    inset:0;
-    background:
-      radial-gradient(900px 420px at 20% 20%, rgba(255,208,137,.08), transparent 55%),
-      radial-gradient(900px 520px at 70% 65%, rgba(255,122,26,.06), transparent 60%),
-      linear-gradient(180deg, rgba(0,0,0,.18), rgba(0,0,0,.55));
-    pointer-events:none;
-  }
-
-  .prologue-caption{
-    position:absolute;
-    left: 18px;
-    right: 18px;
-    bottom: 16px;
-    padding: 12px 14px;
-    border-radius: 14px;
-    background: rgba(0,0,0,.35);
-    border: 1px solid rgba(255,255,255,.10);
-    backdrop-filter: blur(10px);
-    color: rgba(238,242,255,.90);
-    font-size: 14px;
-    line-height: 1.35;
-  }
-  .prologue-caption .accent{
-    color: rgba(255,208,137,.92);
-  }
-
-  .prologue-copy{
-    margin-top: 18px;
-    max-width: 860px;
-  }
-  .prologue-copy p{
-    margin: 0 0 10px;
-    color: rgba(169,179,198,.82);
-  }
-  .small{
-    font-size: 13px;
-    color: rgba(169,179,198,.62);
-  }
-
-  /* Responsive tweak */
-  @media (max-width: 720px){
-    .hero-content{ margin-left: 0; }
-    .hero-image{ background-position: 55% 50%; }
-  }
-</style>
-
-<script>
-  // ---------------------------
-  // Parallax (background + hero image)
-  // ---------------------------
-  (function(){
-    const bg = document.querySelector('.hero-bg');
-    const heroImage = document.querySelector('.hero-image');
-
-    function onScroll(){
-      const y = window.scrollY || 0;
-      if (bg) bg.style.transform = `translateY(${y * 0.10}px)`;
-      if (heroImage) heroImage.style.transform = `translateY(${y * 0.16}px) scale(1.02)`;
-    }
-    window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
-  })();
-
-  // ---------------------------
-  // Embers (lightweight canvas particles)
-  // ---------------------------
-  (function(){
-    const canvas = document.getElementById('embers');
-    const ctx = canvas.getContext('2d', { alpha: true });
-
-    let w, h, dpr;
-    let particles = [];
-    const count = 80; // more subtle for rain/night mood
-
-    function resize(){
-      dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
-      w = canvas.clientWidth = canvas.parentElement.clientWidth;
-      h = canvas.clientHeight = canvas.parentElement.clientHeight;
-      canvas.width = Math.floor(w * dpr);
-      canvas.height = Math.floor(h * dpr);
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    }
-
-    function rand(min, max){ return Math.random() * (max - min) + min; }
-
-    function makeParticle(resetToBottom = true){
-      return {
-        x: rand(0, w),
-        y: resetToBottom ? rand(h * 0.60, h + 60) : rand(0, h),
-        r: rand(0.6, 2.0),
-        vy: rand(0.08, 0.35),
-        vx: rand(-0.10, 0.10),
-        life: rand(0.35, 1.0),
-        flicker: rand(0.6, 1.0),
-        hue: rand(18, 38),
-        sat: rand(70, 95),
-        light: rand(55, 70)
-      };
-    }
-
-    function init(){
-      particles = [];
-      for(let i=0;i<count;i++) particles.push(makeParticle(false));
-    }
-
-    function draw(){
-      ctx.clearRect(0,0,w,h);
-      ctx.globalCompositeOperation = 'lighter';
-
-      for(const p of particles){
-        p.y -= p.vy;
-        p.x += p.vx + Math.sin((p.y + p.x) * 0.002) * 0.08;
-
-        p.flicker += rand(-0.03, 0.03);
-        p.flicker = Math.max(0.55, Math.min(1.0, p.flicker));
-
-        if(p.y < -30 || p.x < -50 || p.x > w + 50){
-          Object.assign(p, makeParticle(true));
-        }
-
-        const alpha = 0.18 * p.life * p.flicker;
-        const grd = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r * 6);
-        grd.addColorStop(0, `hsla(${p.hue}, ${p.sat}%, ${p.light}%, ${alpha})`);
-        grd.addColorStop(1, `hsla(${p.hue}, ${p.sat}%, ${p.light}%, 0)`);
-
-        ctx.fillStyle = grd;
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.r * 6, 0, Math.PI * 2);
-        ctx.fill();
-      }
-
-      ctx.globalCompositeOperation = 'source-over';
-      requestAnimationFrame(draw);
-    }
-
-    window.addEventListener('resize', () => { resize(); init(); }, { passive: true });
-    resize(); init(); draw();
-  })();
-</script>
+</body>
+</html>
