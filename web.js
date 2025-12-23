@@ -1,29 +1,22 @@
 /* ==========================================
-   Redemption / Site — web.js
+   Redemption — web.js
    - Parallax hero layers
    - Ember particles canvas
-   - Optional reveal-on-scroll
 ========================================== */
 
 (function () {
   "use strict";
 
-  // ---------------------------
-  // Helpers
-  // ---------------------------
-  const $ = (sel, root = document) => root.querySelector(sel);
-
-  // Respect reduced motion
-  const prefersReducedMotion = window.matchMedia &&
+  const prefersReducedMotion =
+    window.matchMedia &&
     window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   // ---------------------------
   // Parallax (hero-bg + hero-image)
   // ---------------------------
   (function initParallax() {
-    const bg = $(".hero-bg");
-    const heroImage = $(".hero-image");
-
+    const bg = document.querySelector(".hero-bg");
+    const heroImage = document.querySelector(".hero-image");
     if (!bg && !heroImage) return;
     if (prefersReducedMotion) return;
 
@@ -32,8 +25,6 @@
     function apply() {
       ticking = false;
       const y = window.scrollY || 0;
-
-      // subtle parallax
       if (bg) bg.style.transform = `translateY(${y * 0.10}px)`;
       if (heroImage) heroImage.style.transform = `translateY(${y * 0.16}px) scale(1.02)`;
     }
@@ -41,7 +32,7 @@
     function onScroll() {
       if (!ticking) {
         ticking = true;
-        window.requestAnimationFrame(apply);
+        requestAnimationFrame(apply);
       }
     }
 
@@ -53,35 +44,19 @@
   // Embers (canvas particles)
   // ---------------------------
   (function initEmbers() {
-    const canvas = $("#embers");
+    const canvas = document.getElementById("embers");
     if (!canvas) return;
 
     const ctx = canvas.getContext("2d", { alpha: true });
     if (!ctx) return;
 
-    if (prefersReducedMotion) {
-      // If reduced motion, keep canvas cleared (no animation)
-      const resizeStatic = () => {
-        const parent = canvas.parentElement;
-        if (!parent) return;
-        canvas.width = Math.floor(parent.clientWidth);
-        canvas.height = Math.floor(parent.clientHeight);
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-      };
-      window.addEventListener("resize", resizeStatic, { passive: true });
-      resizeStatic();
-      return;
-    }
+    if (prefersReducedMotion) return;
 
     let w = 0, h = 0, dpr = 1;
     let particles = [];
-
-    // Density: tuned for rain/night mood
     const COUNT = 90;
 
-    function rand(min, max) {
-      return Math.random() * (max - min) + min;
-    }
+    const rand = (min, max) => Math.random() * (max - min) + min;
 
     function resize() {
       const parent = canvas.parentElement;
@@ -121,26 +96,20 @@
 
     function draw() {
       ctx.clearRect(0, 0, w, h);
-
-      // Cinematic blending
       ctx.globalCompositeOperation = "lighter";
 
       for (const p of particles) {
-        // motion
         p.y -= p.vy;
         p.x += p.vx + Math.sin((p.y + p.x) * 0.002) * 0.08;
 
-        // flicker
         p.flicker += rand(-0.03, 0.03);
         p.flicker = Math.max(0.55, Math.min(1.0, p.flicker));
 
-        // respawn
         if (p.y < -30 || p.x < -50 || p.x > w + 50) {
           Object.assign(p, makeParticle(true));
         }
 
-        // render glow
-        const alpha = 0.16 * p.life * p.flicker; // slightly softer
+        const alpha = 0.16 * p.life * p.flicker;
         const radius = p.r * 6;
 
         const grd = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, radius);
@@ -154,49 +123,25 @@
       }
 
       ctx.globalCompositeOperation = "source-over";
-      window.requestAnimationFrame(draw);
+      requestAnimationFrame(draw);
     }
 
-    // init
     resize();
     init();
     draw();
 
-    // keep stable on resize (debounced)
-    let resizeTimer = null;
-    window.addEventListener("resize", () => {
-      clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(() => {
-        resize();
-        init();
-      }, 120);
-    }, { passive: true });
-  })();
-
-  // ---------------------------
-  // Optional: reveal-on-scroll
-  // Add class="reveal" in HTML where you want fade-in
-  // ---------------------------
-  (function initReveal() {
-    const items = document.querySelectorAll(".reveal");
-    if (!items.length) return;
-
-    // If reduced motion, just show everything
-    if (prefersReducedMotion) {
-      items.forEach(el => el.classList.add("is-visible"));
-      return;
-    }
-
-    const io = new IntersectionObserver((entries) => {
-      for (const entry of entries) {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("is-visible");
-          io.unobserve(entry.target);
-        }
-      }
-    }, { threshold: 0.15 });
-
-    items.forEach(el => io.observe(el));
+    let t = null;
+    window.addEventListener(
+      "resize",
+      () => {
+        clearTimeout(t);
+        t = setTimeout(() => {
+          resize();
+          init();
+        }, 120);
+      },
+      { passive: true }
+    );
   })();
 
 })();
