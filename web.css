@@ -407,3 +407,51 @@ body::before{
   .hero-scroll span::after{ animation: none; }
   .reveal{ transition: none; transform:none; opacity:1; }
 }
+.hero-coming-soon{
+  font-size: 1.1rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #d6b56a;
+  margin-bottom: 10px;
+  opacity: 0.9;
+}
+
+.hero-tagline{
+  max-width: 600px;
+  margin: 0 auto 30px auto;
+  font-size: 1.25rem;
+  line-height: 1.6;
+  color: #e8e8e8;
+}
+/* =========================
+   REDEMPTION TITLE GLOW
+========================= */
+
+.hero-title{
+  font-size: clamp(3rem, 8vw, 6rem);
+  letter-spacing: 6px;
+  color: #f5f1e6;
+
+  text-shadow:
+    0 0 10px rgba(255,180,80,0.35),
+    0 0 25px rgba(255,120,40,0.25),
+    0 0 50px rgba(255,60,0,0.15);
+
+  animation: emberGlow 4s ease-in-out infinite alternate;
+}
+
+@keyframes emberGlow{
+  from{
+    text-shadow:
+      0 0 8px rgba(255,160,60,0.25),
+      0 0 20px rgba(255,90,30,0.2),
+      0 0 40px rgba(255,40,0,0.12);
+  }
+
+  to{
+    text-shadow:
+      0 0 16px rgba(255,200,100,0.45),
+      0 0 40px rgba(255,120,40,0.35),
+      0 0 80px rgba(255,60,0,0.25);
+  }
+}
