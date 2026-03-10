@@ -408,12 +408,12 @@ body::before{
   .reveal{ transition: none; transform:none; opacity:1; }
 }
 .hero-coming-soon{
-  font-size: 1.1rem;
-  letter-spacing: 3px;
+  font-size: 1.6rem;
+  letter-spacing: 4px;
   text-transform: uppercase;
   color: #d6b56a;
-  margin-bottom: 10px;
-  opacity: 0.9;
+  margin-bottom: 12px;
+  opacity: 0.95;
 }
 
 .hero-tagline{
