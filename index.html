@@ -100,46 +100,50 @@
      AUDIO
 ========================== -->
 <audio id="bgMusic" preload="auto">
-  <source src="assets/Redemption (1).mp3" type="audio/mpeg" />
-  Your browser does not support the audio element.
+  <source src="assets/redemption-theme.mp3" type="audio/mpeg" />
 </audio>
 
-<button
-  id="musicBtn"
-  type="button"
-  aria-label="Continue music"
-  style="
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    z-index: 9999;
-    background: rgba(11, 15, 25, 0.92);
-    color: #ffffff;
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    padding: 10px 16px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 0.95rem;
-    letter-spacing: 0.04em;
-    backdrop-filter: blur(6px);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
-  "
->
-  Continue Music
-</button>
-
-<!-- web.js is in the SAME folder as this index.html -->
 <script src="web.js" defer></script>
 
 <script>
+document.addEventListener("DOMContentLoaded", function () {
   const audio = document.getElementById("bgMusic");
-  const musicBtn = document.getElementById("musicBtn");
-  let previewPlayed = false;
-  let previewTimeout;
-  let fadeInterval;
+  const musicToggleBtn = document.getElementById("musicToggleBtn");
+  const musicStopBtn = document.getElementById("musicStopBtn");
+  const audioStatus = document.getElementById("audioStatus");
 
-  function stopPreviewWithFade() {
-    clearInterval(fadeInterval);
+  let previewPlayed = false;
+  let previewTimeout = null;
+  let fadeInterval = null;
+
+  function updateStatus(message) {
+    audioStatus.textContent = message;
+  }
+
+  function setPlayVisual() {
+    musicToggleBtn.innerHTML = '<span class="audio-icon">🔥</span>';
+  }
+
+  function setPauseVisual() {
+    musicToggleBtn.innerHTML = '<span class="audio-icon">⏸</span>';
+  }
+
+  function clearAudioTimers() {
+    if (previewTimeout) clearTimeout(previewTimeout);
+    if (fadeInterval) clearInterval(fadeInterval);
+  }
+
+  function stopAudio() {
+    clearAudioTimers();
+    audio.pause();
+    audio.currentTime = 0;
+    audio.volume = 1;
+    setPlayVisual();
+    updateStatus("Music stopped");
+  }
+
+  function fadeOutAndStop() {
+    clearAudioTimers();
 
     fadeInterval = setInterval(() => {
       if (audio.volume > 0.1) {
@@ -149,33 +153,72 @@
         audio.pause();
         audio.currentTime = 0;
         audio.volume = 1;
+        setPlayVisual();
+        updateStatus("Preview ended");
       }
-    }, 200);
+    }, 180);
   }
 
-  function startPreviewOnce() {
+  async function startPreview() {
     if (previewPlayed) return;
-    previewPlayed = true;
 
+    previewPlayed = true;
+    clearAudioTimers();
+    audio.currentTime = 0;
     audio.volume = 1;
-    audio.play().then(() => {
+    audio.loop = false;
+
+    try {
+      await audio.play();
+      setPauseVisual();
+      updateStatus("Preview playing");
+
       previewTimeout = setTimeout(() => {
-        stopPreviewWithFade();
-      }, 9000);
-    }).catch(() => {
-      // Browser blocked playback until interaction completes elsewhere
-    });
+        fadeOutAndStop();
+      }, 10000);
+    } catch (error) {
+      console.error(error);
+      updateStatus("Tap fire to play");
+    }
   }
 
-  document.addEventListener("click", startPreviewOnce, { once: true });
+  async function toggleMusic(event) {
+    event.stopPropagation();
+    clearAudioTimers();
 
-  musicBtn.addEventListener("click", function () {
-    clearTimeout(previewTimeout);
-    clearInterval(fadeInterval);
-    audio.volume = 1;
-    audio.currentTime = 0;
-    audio.play();
+    try {
+      if (audio.paused) {
+        audio.volume = 1;
+        audio.loop = true;
+        await audio.play();
+        setPauseVisual();
+        updateStatus("Music playing");
+      } else {
+        audio.pause();
+        setPlayVisual();
+        updateStatus("Music paused");
+      }
+    } catch (error) {
+      console.error(error);
+      updateStatus("Could not play audio");
+    }
+  }
+
+  function handleFirstInteraction() {
+    startPreview();
+  }
+
+  document.addEventListener("click", handleFirstInteraction, { once: true });
+  document.addEventListener("keydown", handleFirstInteraction, { once: true });
+  document.addEventListener("touchstart", handleFirstInteraction, { once: true });
+
+  musicToggleBtn.addEventListener("click", toggleMusic);
+
+  musicStopBtn.addEventListener("click", function (event) {
+    event.stopPropagation();
+    stopAudio();
   });
+});
 </script>
 
 </body>
