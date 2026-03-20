@@ -10,6 +10,107 @@
 
   <!-- web.css is in the SAME folder as this index.html -->
   <link rel="stylesheet" href="web.css" />
+
+  <style>
+    .audio-control-wrap {
+      position: absolute;
+      top: 24px;
+      right: 24px;
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .audio-btn {
+      appearance: none;
+      border: 1px solid rgba(255, 120, 80, 0.35);
+      background: rgba(10, 10, 14, 0.72);
+      color: #f6e7df;
+      cursor: pointer;
+      backdrop-filter: blur(8px);
+      transition: transform 0.2s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+    }
+
+    .audio-btn:hover {
+      transform: translateY(-1px);
+      border-color: rgba(255, 150, 110, 0.55);
+      box-shadow:
+        0 0 14px rgba(255, 90, 40, 0.20),
+        0 0 30px rgba(255, 90, 40, 0.12);
+    }
+
+    .audio-icon-btn {
+      width: 54px;
+      height: 54px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow:
+        0 0 0 1px rgba(255, 120, 80, 0.08),
+        0 0 18px rgba(255, 90, 40, 0.18),
+        inset 0 0 18px rgba(255, 120, 80, 0.06);
+      position: relative;
+    }
+
+    .audio-icon-btn::before {
+      content: "";
+      position: absolute;
+      inset: -6px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 110, 70, 0.14);
+      box-shadow: 0 0 20px rgba(255, 90, 40, 0.14);
+      pointer-events: none;
+    }
+
+    .audio-icon {
+      font-size: 1.1rem;
+      line-height: 1;
+      filter: drop-shadow(0 0 8px rgba(255, 120, 80, 0.25));
+    }
+
+    .audio-text-btn {
+      padding: 10px 14px;
+      border-radius: 999px;
+      font-size: 0.92rem;
+      letter-spacing: 0.04em;
+      font-weight: 600;
+    }
+
+    .audio-status {
+      color: rgba(255, 230, 220, 0.88);
+      font-size: 0.84rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      text-shadow: 0 0 12px rgba(255, 100, 50, 0.18);
+      padding: 0 4px;
+    }
+
+    @media (max-width: 768px) {
+      .audio-control-wrap {
+        top: 16px;
+        right: 16px;
+        gap: 8px;
+      }
+
+      .audio-icon-btn {
+        width: 48px;
+        height: 48px;
+      }
+
+      .audio-text-btn {
+        padding: 9px 12px;
+        font-size: 0.84rem;
+      }
+
+      .audio-status {
+        width: 100%;
+        font-size: 0.75rem;
+      }
+    }
+  </style>
 </head>
 
 <body>
@@ -20,7 +121,7 @@
 <section
   id="hero"
   aria-label="Redemption hero"
-  style="--hero-img: url('assets/Redemption-Opening.png');">
+  style="--hero-img: url('assets/Redemption-Opening.png'); position: relative;">
 
   <!-- Ember particles -->
   <canvas id="embers" aria-hidden="true"></canvas>
@@ -31,6 +132,31 @@
     <div class="hero-rain"></div>
     <div class="hero-vignette"></div>
     <div class="hero-image"></div>
+  </div>
+
+  <!-- Audio controls -->
+  <div class="audio-control-wrap">
+    <button
+      id="musicToggleBtn"
+      class="audio-btn audio-icon-btn"
+      type="button"
+      aria-label="Play music"
+      title="Play music"
+    >
+      <span class="audio-icon">🔥</span>
+    </button>
+
+    <button
+      id="musicStopBtn"
+      class="audio-btn audio-text-btn"
+      type="button"
+      aria-label="Stop music"
+      title="Stop music"
+    >
+      Stop
+    </button>
+
+    <div id="audioStatus" class="audio-status">Sound waiting</div>
   </div>
 
   <!-- Foreground content -->
@@ -80,14 +206,14 @@
 
     <div class="prologue-copy reveal">
       <p>
-        The rain had started as a mist and turned into a slow, steady drizzle that coated everything in a thin sheen of silver. 
-        Freya stood with Steve and Jack at the rear of the two-story house, staring at the towering white-marble staircase that 
-        led from the patio down to the pool. Water streamed along the curved marble railings and dripped in clear beads from the 
+        The rain had started as a mist and turned into a slow, steady drizzle that coated everything in a thin sheen of silver.
+        Freya stood with Steve and Jack at the rear of the two-story house, staring at the towering white-marble staircase that
+        led from the patio down to the pool. Water streamed along the curved marble railings and dripped in clear beads from the
         ornate stonework, making the whole place look like it belonged in a magazine, untouched, elegant, sterile.
       </p>
       <p class="small">
         It should have been beautiful. Instead, it felt wrong.
-        
+
         Dark clouds smothered the moon. Rain pattered against the pool in soft, rhythmic taps.
         Inside, several lights glowed behind tall French doors—warm, golden, alive.
       </p>
@@ -100,81 +226,153 @@
      AUDIO
 ========================== -->
 <audio id="bgMusic" preload="auto">
-  <source src="assets/Redemption-theme.mp3" type="audio/mpeg" />
+  <source src="assets/redemption-theme.mp3" type="audio/mpeg" />
   Your browser does not support the audio element.
 </audio>
-
-<button
-  id="musicBtn"
-  type="button"
-  aria-label="Continue music"
-  style="
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    z-index: 9999;
-    background: rgba(11, 15, 25, 0.92);
-    color: #ffffff;
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    padding: 10px 16px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 0.95rem;
-    letter-spacing: 0.04em;
-    backdrop-filter: blur(6px);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
-  "
->
-  Continue Music
-</button>
 
 <!-- web.js is in the SAME folder as this index.html -->
 <script src="web.js" defer></script>
 
 <script>
   const audio = document.getElementById("bgMusic");
-  const musicBtn = document.getElementById("musicBtn");
-  let previewPlayed = false;
-  let previewTimeout;
-  let fadeInterval;
+  const musicToggleBtn = document.getElementById("musicToggleBtn");
+  const musicStopBtn = document.getElementById("musicStopBtn");
+  const audioStatus = document.getElementById("audioStatus");
 
-  function stopPreviewWithFade() {
-    clearInterval(fadeInterval);
+  let previewPlayed = false;
+  let fullPlaybackStarted = false;
+  let previewTimeout = null;
+  let fadeInterval = null;
+
+  function clearAudioTimers() {
+    if (previewTimeout) {
+      clearTimeout(previewTimeout);
+      previewTimeout = null;
+    }
+
+    if (fadeInterval) {
+      clearInterval(fadeInterval);
+      fadeInterval = null;
+    }
+  }
+
+  function updateStatus(message) {
+    audioStatus.textContent = message;
+  }
+
+  function setPlayVisual() {
+    musicToggleBtn.innerHTML = '<span class="audio-icon">🔥</span>';
+    musicToggleBtn.setAttribute("aria-label", "Play music");
+    musicToggleBtn.setAttribute("title", "Play music");
+  }
+
+  function setPauseVisual() {
+    musicToggleBtn.innerHTML = '<span class="audio-icon">⏸</span>';
+    musicToggleBtn.setAttribute("aria-label", "Pause music");
+    musicToggleBtn.setAttribute("title", "Pause music");
+  }
+
+  function stopAudio(resetToStart = true) {
+    clearAudioTimers();
+    audio.pause();
+    audio.volume = 1;
+
+    if (resetToStart) {
+      audio.currentTime = 0;
+    }
+
+    setPlayVisual();
+    updateStatus("Sound waiting");
+  }
+
+  function fadeOutAndStop() {
+    clearAudioTimers();
 
     fadeInterval = setInterval(() => {
       if (audio.volume > 0.1) {
         audio.volume -= 0.1;
       } else {
         clearInterval(fadeInterval);
+        fadeInterval = null;
         audio.pause();
         audio.currentTime = 0;
         audio.volume = 1;
+        setPlayVisual();
+        updateStatus("Preview ended");
       }
-    }, 200);
+    }, 180);
   }
 
-  function startPreviewOnce() {
-    if (previewPlayed) return;
-    previewPlayed = true;
+  function startPreview() {
+    if (previewPlayed || fullPlaybackStarted) return;
 
+    previewPlayed = true;
+    clearAudioTimers();
     audio.volume = 1;
+
     audio.play().then(() => {
+      setPauseVisual();
+      updateStatus("Preview playing");
+
       previewTimeout = setTimeout(() => {
-        stopPreviewWithFade();
-      }, 9000);
+        fadeOutAndStop();
+      }, 10000);
     }).catch(() => {
-      // Browser blocked playback until interaction completes elsewhere
+      updateStatus("Tap fire to play");
     });
   }
 
-  document.addEventListener("click", startPreviewOnce, { once: true });
-
-  musicBtn.addEventListener("click", function () {
-    clearTimeout(previewTimeout);
-    clearInterval(fadeInterval);
+  function startFullMusic() {
+    fullPlaybackStarted = true;
+    clearAudioTimers();
     audio.volume = 1;
-    audio.currentTime = 0;
-    audio.play();
+
+    audio.play().then(() => {
+      setPauseVisual();
+      updateStatus("Music playing");
+    }).catch(() => {
+      updateStatus("Tap fire to play");
+    });
+  }
+
+  function pauseFullMusic() {
+    clearAudioTimers();
+    audio.pause();
+    setPlayVisual();
+    updateStatus("Music paused");
+  }
+
+  function handleFirstInteraction() {
+    startPreview();
+    document.removeEventListener("click", handleFirstInteraction);
+    document.removeEventListener("keydown", handleFirstInteraction);
+    document.removeEventListener("touchstart", handleFirstInteraction);
+  }
+
+  document.addEventListener("click", handleFirstInteraction, { once: true });
+  document.addEventListener("keydown", handleFirstInteraction, { once: true });
+  document.addEventListener("touchstart", handleFirstInteraction, { once: true });
+
+  musicToggleBtn.addEventListener("click", function (event) {
+    event.stopPropagation();
+
+    if (!audio.paused && !audio.ended) {
+      pauseFullMusic();
+      return;
+    }
+
+    startFullMusic();
+  });
+
+  musicStopBtn.addEventListener("click", function (event) {
+    event.stopPropagation();
+    fullPlaybackStarted = false;
+    stopAudio(true);
+  });
+
+  audio.addEventListener("ended", function () {
+    setPlayVisual();
+    updateStatus("Music ended");
   });
 </script>
 
