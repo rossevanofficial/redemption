@@ -38,11 +38,11 @@
     <p class="hero-kicker">Written by Ross Evans</p>
     <h1 class="hero-title">REDEMPTION</h1>
 
-<p class="hero-coming-soon">Redemption — Coming Soon</p>
+    <p class="hero-coming-soon">Redemption — Coming Soon</p>
 
-<p class="hero-tagline">
-  A dark fantasy novel about guilt, power, and the fight for redemption when death is only the beginning.
-</p>
+    <p class="hero-tagline">
+      A dark fantasy novel about guilt, power, and the fight for redemption when death is only the beginning.
+    </p>
 
     <div class="hero-cta">
       <a class="btn btn-primary" href="#prologue">Read the Story</a>
@@ -80,7 +80,7 @@
 
     <div class="prologue-copy reveal">
       <p>
-       The rain had started as a mist and turned into a slow, steady drizzle that coated everything in a thin sheen of silver. 
+        The rain had started as a mist and turned into a slow, steady drizzle that coated everything in a thin sheen of silver. 
         Freya stood with Steve and Jack at the rear of the two-story house, staring at the towering white-marble staircase that 
         led from the patio down to the pool. Water streamed along the curved marble railings and dripped in clear beads from the 
         ornate stonework, making the whole place look like it belonged in a magazine, untouched, elegant, sterile.
@@ -96,7 +96,87 @@
   </div>
 </section>
 
+<!-- =========================
+     AUDIO
+========================== -->
+<audio id="bgMusic" preload="auto">
+  <source src="music/redemption-theme.mp3" type="audio/mpeg" />
+  Your browser does not support the audio element.
+</audio>
+
+<button
+  id="musicBtn"
+  type="button"
+  aria-label="Continue music"
+  style="
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 9999;
+    background: rgba(11, 15, 25, 0.92);
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    padding: 10px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    letter-spacing: 0.04em;
+    backdrop-filter: blur(6px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  "
+>
+  Continue Music
+</button>
+
 <!-- web.js is in the SAME folder as this index.html -->
 <script src="web.js" defer></script>
+
+<script>
+  const audio = document.getElementById("bgMusic");
+  const musicBtn = document.getElementById("musicBtn");
+  let previewPlayed = false;
+  let previewTimeout;
+  let fadeInterval;
+
+  function stopPreviewWithFade() {
+    clearInterval(fadeInterval);
+
+    fadeInterval = setInterval(() => {
+      if (audio.volume > 0.1) {
+        audio.volume -= 0.1;
+      } else {
+        clearInterval(fadeInterval);
+        audio.pause();
+        audio.currentTime = 0;
+        audio.volume = 1;
+      }
+    }, 200);
+  }
+
+  function startPreviewOnce() {
+    if (previewPlayed) return;
+    previewPlayed = true;
+
+    audio.volume = 1;
+    audio.play().then(() => {
+      previewTimeout = setTimeout(() => {
+        stopPreviewWithFade();
+      }, 9000);
+    }).catch(() => {
+      // Browser blocked playback until interaction completes elsewhere
+    });
+  }
+
+  document.addEventListener("click", startPreviewOnce, { once: true });
+
+  musicBtn.addEventListener("click", function () {
+    clearTimeout(previewTimeout);
+    clearInterval(fadeInterval);
+    audio.volume = 1;
+    audio.currentTime = 0;
+    audio.play();
+  });
+</script>
+
 </body>
 </html>
