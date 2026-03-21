@@ -246,127 +246,126 @@
   Your browser does not support the audio element.
 </audio>
 
+  <!-- <script src="web.js" defer></script> -->
+
 <script>
-  const audio = document.getElementById("bgMusic");
-  const musicToggleBtn = document.getElementById("musicToggleBtn");
-  const musicStopBtn = document.getElementById("musicStopBtn");
-  const audioStatus = document.getElementById("audioStatus");
+  document.addEventListener("DOMContentLoaded", function () {
+    const audio = document.getElementById("bgMusic");
+    const musicToggleBtn = document.getElementById("musicToggleBtn");
+    const musicStopBtn = document.getElementById("musicStopBtn");
+    const audioStatus = document.getElementById("audioStatus");
 
-  let previewPlayed = false;
-  let previewTimeout = null;
-  let fadeInterval = null;
+    let previewPlayed = false;
+    let previewTimeout = null;
+    let fadeInterval = null;
 
-  function logStatus(message) {
-    console.log(message);
-    if (audioStatus) {
+    function updateStatus(message) {
+      console.log(message);
       audioStatus.textContent = message;
     }
-  }
 
-  function setPlayVisual() {
-    musicToggleBtn.innerHTML = '<span class="audio-icon">🔥</span>';
-    musicToggleBtn.setAttribute("aria-label", "Play music");
-    musicToggleBtn.setAttribute("title", "Play music");
-  }
-
-  function setPauseVisual() {
-    musicToggleBtn.innerHTML = '<span class="audio-icon">⏸</span>';
-    musicToggleBtn.setAttribute("aria-label", "Pause music");
-    musicToggleBtn.setAttribute("title", "Pause music");
-  }
-
-  function clearAudioTimers() {
-    if (previewTimeout) {
-      clearTimeout(previewTimeout);
-      previewTimeout = null;
+    function setPlayVisual() {
+      musicToggleBtn.innerHTML = '<span class="audio-icon">🔥</span>';
+      musicToggleBtn.setAttribute("aria-label", "Play music");
+      musicToggleBtn.setAttribute("title", "Play music");
     }
-    if (fadeInterval) {
-      clearInterval(fadeInterval);
-      fadeInterval = null;
+
+    function setPauseVisual() {
+      musicToggleBtn.innerHTML = '<span class="audio-icon">⏸</span>';
+      musicToggleBtn.setAttribute("aria-label", "Pause music");
+      musicToggleBtn.setAttribute("title", "Pause music");
     }
-  }
 
-  function fadeOutAndStop() {
-    clearAudioTimers();
-    logStatus("Fading preview");
-
-    fadeInterval = setInterval(() => {
-      if (audio.volume > 0.1) {
-        audio.volume = Math.max(0, audio.volume - 0.1);
-      } else {
+    function clearAudioTimers() {
+      if (previewTimeout) {
+        clearTimeout(previewTimeout);
+        previewTimeout = null;
+      }
+      if (fadeInterval) {
         clearInterval(fadeInterval);
         fadeInterval = null;
-        audio.pause();
-        audio.currentTime = 0;
-        audio.volume = 1;
-        setPlayVisual();
-        logStatus("Preview ended");
       }
-    }, 180);
-  }
-
-  async function startPreview() {
-    if (previewPlayed) return;
-
-    previewPlayed = true;
-    clearAudioTimers();
-    audio.currentTime = 0;
-    audio.volume = 1;
-    audio.loop = false;
-
-    logStatus("Trying preview");
-
-    try {
-      await audio.play();
-      setPauseVisual();
-      logStatus("Preview playing");
-
-      previewTimeout = setTimeout(() => {
-        fadeOutAndStop();
-      }, 10000);
-    } catch (err) {
-      console.error("Preview failed:", err);
-      logStatus("Preview failed");
     }
-  }
 
-  async function playFullMusic() {
-    clearAudioTimers();
-    audio.volume = 1;
-    audio.loop = true;
-
-    logStatus("Trying full play");
-
-    try {
-      await audio.play();
-      setPauseVisual();
-      logStatus("Music playing");
-    } catch (err) {
-      console.error("Full play failed:", err);
-      logStatus("Play failed");
+    function stopMusic() {
+      clearAudioTimers();
+      audio.pause();
+      audio.currentTime = 0;
+      audio.volume = 1;
+      audio.loop = false;
+      setPlayVisual();
+      updateStatus("Music stopped");
     }
-  }
 
-  function pauseMusic() {
-    clearAudioTimers();
-    audio.pause();
-    setPlayVisual();
-    logStatus("Music paused");
-  }
+    function fadeOutAndStop() {
+      clearAudioTimers();
+      updateStatus("Fading preview");
 
-  function stopMusic() {
-    clearAudioTimers();
-    audio.pause();
-    audio.currentTime = 0;
-    audio.volume = 1;
-    audio.loop = false;
-    setPlayVisual();
-    logStatus("Music stopped");
-  }
+      fadeInterval = setInterval(() => {
+        if (audio.volume > 0.1) {
+          audio.volume = Math.max(0, audio.volume - 0.1);
+        } else {
+          clearInterval(fadeInterval);
+          fadeInterval = null;
+          audio.pause();
+          audio.currentTime = 0;
+          audio.volume = 1;
+          audio.loop = false;
+          setPlayVisual();
+          updateStatus("Preview ended");
+        }
+      }, 180);
+    }
 
-  document.addEventListener(
-    "click",
-    function firstPageClick(e) {
+    async function startPreview() {
+      if (previewPlayed) return;
+
+      previewPlayed = true;
+      clearAudioTimers();
+      audio.pause();
+      audio.currentTime = 0;
+      audio.volume = 1;
+      audio.loop = false;
+
+      updateStatus("Starting preview");
+
+      try {
+        await audio.play();
+        setPauseVisual();
+        updateStatus("Preview playing");
+
+        previewTimeout = setTimeout(() => {
+          fadeOutAndStop();
+        }, 10000);
+      } catch (err) {
+        console.error("Preview failed:", err);
+        updateStatus("Preview failed");
+      }
+    }
+
+    async function playFullMusic() {
+      clearAudioTimers();
+      audio.loop = true;
+      audio.volume = 1;
+
+      try {
+        await audio.play();
+        setPauseVisual();
+        updateStatus("Music playing");
+      } catch (err) {
+        console.error("Full play failed:", err);
+        updateStatus("Play failed");
+      }
+    }
+
+    function pauseMusic() {
+      clearAudioTimers();
+      audio.pause();
+      setPlayVisual();
+      updateStatus("Music paused");
+    }
+
+    function firstInteractionHandler(e) {
       if (
         e.target.closest("#musicToggleBtn") ||
         e.target.closest("#musicStopBtn")
@@ -374,46 +373,54 @@
         return;
       }
 
-      startPreview();
-    },
-    { once: true }
-  );
+      document.removeEventListener("click", firstInteractionHandler);
+      document.removeEventListener("touchstart", firstInteractionHandler);
+      document.removeEventListener("keydown", firstInteractionHandler);
 
-  musicToggleBtn.addEventListener("click", async function (e) {
-    e.stopPropagation();
-    logStatus("Toggle clicked");
-
-    if (audio.paused) {
-      await playFullMusic();
-    } else {
-      pauseMusic();
+      setTimeout(() => {
+        startPreview();
+      }, 50);
     }
-  });
 
-  musicStopBtn.addEventListener("click", function (e) {
-    e.stopPropagation();
-    logStatus("Stop clicked");
-    stopMusic();
-  });
+    document.addEventListener("click", firstInteractionHandler);
+    document.addEventListener("touchstart", firstInteractionHandler);
+    document.addEventListener("keydown", firstInteractionHandler);
 
-  audio.addEventListener("error", function () {
-    console.error("Audio error object:", audio.error);
-    logStatus("Audio file error");
-  });
+    musicToggleBtn.addEventListener("click", async function (e) {
+      e.stopPropagation();
 
-  audio.addEventListener("canplaythrough", function () {
-    logStatus("Audio ready");
-  });
+      if (audio.paused) {
+        await playFullMusic();
+      } else {
+        pauseMusic();
+      }
+    });
 
-  audio.addEventListener("ended", function () {
-    if (!audio.loop) {
-      setPlayVisual();
-      logStatus("Music ended");
-    }
-  });
+    musicStopBtn.addEventListener("click", function (e) {
+      e.stopPropagation();
+      stopMusic();
+    });
 
-  logStatus("Audio script loaded");
-  </script>
+    audio.addEventListener("canplaythrough", function () {
+      updateStatus("Audio ready");
+    });
+
+    audio.addEventListener("error", function () {
+      console.error("Audio error:", audio.error);
+      updateStatus("Audio file error");
+    });
+
+    audio.addEventListener("ended", function () {
+      if (!audio.loop) {
+        setPlayVisual();
+        updateStatus("Music ended");
+      }
+    });
+
+    setPlayVisual();
+    updateStatus("Sound waiting");
+  });
+</script>
 
 </body>
 </html>
