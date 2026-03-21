@@ -48,6 +48,16 @@
       <a class="btn btn-primary" href="#prologue">Read the Story</a>
       <a class="btn btn-ghost" href="#prologue">This is where the story began</a>
     </div>
+
+    <!-- MUSIC CONTROLS -->
+    <div class="hero-cta" style="margin-top: 12px; flex-wrap: wrap;">
+      <button class="btn btn-ghost" type="button" id="stopBtn">⏹ Stop</button>
+      <button class="btn btn-primary" type="button" id="continueBtn">▶ Continue</button>
+    </div>
+
+    <p id="musicStatus" style="margin-top: 10px;">
+      Click anywhere on the page to play the theme for 15 seconds.
+    </p>
   </div>
 
   <!-- Scroll cue -->
@@ -104,77 +114,113 @@
   Your browser does not support the audio element.
 </audio>
 
-<button
-  id="musicBtn"
-  type="button"
-  aria-label="Continue music"
-  style="
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    z-index: 9999;
-    background: rgba(11, 15, 25, 0.92);
-    color: #ffffff;
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    padding: 10px 16px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 0.95rem;
-    letter-spacing: 0.04em;
-    backdrop-filter: blur(6px);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
-  "
->
-  Continue Music
-</button>
-
 <!-- web.js is in the SAME folder as this index.html -->
 <script src="web.js" defer></script>
 
 <script>
-  const audio = document.getElementById("bgMusic");
-  const musicBtn = document.getElementById("musicBtn");
-  let previewPlayed = false;
-  let previewTimeout;
-  let fadeInterval;
+  const music = document.getElementById("bgMusic");
+  const stopBtn = document.getElementById("stopBtn");
+  const continueBtn = document.getElementById("continueBtn");
+  const musicStatus = document.getElementById("musicStatus");
 
-  function stopPreviewWithFade() {
-    clearInterval(fadeInterval);
+  let stopTimer = null;
+  let pausedTime = 0;
+  let hasStarted = false;
+  let firstInteractionHandled = false;
+  let stoppedByTimer = false;
 
-    fadeInterval = setInterval(() => {
-      if (audio.volume > 0.1) {
-        audio.volume -= 0.1;
+  function setMusicStatus(message) {
+    musicStatus.textContent = message;
+  }
+
+  function clearMusicTimer() {
+    if (stopTimer) {
+      clearTimeout(stopTimer);
+      stopTimer = null;
+    }
+  }
+
+  function start15SecondTimer() {
+    clearMusicTimer();
+    stopTimer = setTimeout(() => {
+      pausedTime = music.currentTime;
+      stoppedByTimer = true;
+      music.pause();
+      setMusicStatus("Music stopped after 15 seconds.");
+    }, 15000);
+  }
+
+  async function playFromStart() {
+    try {
+      clearMusicTimer();
+      music.currentTime = 0;
+      pausedTime = 0;
+      stoppedByTimer = false;
+      await music.play();
+      hasStarted = true;
+      setMusicStatus("Playing for 15 seconds...");
+      start15SecondTimer();
+    } catch (error) {
+      setMusicStatus("Could not start audio. Check the file path and filename.");
+      console.error("Play failed:", error);
+    }
+  }
+
+  async function continuePlaying() {
+    try {
+      clearMusicTimer();
+      music.currentTime = pausedTime;
+      await music.play();
+      hasStarted = true;
+
+      if (stoppedByTimer) {
+        setMusicStatus("Continuing the rest of the song...");
+        stoppedByTimer = false;
       } else {
-        clearInterval(fadeInterval);
-        audio.pause();
-        audio.currentTime = 0;
-        audio.volume = 1;
+        setMusicStatus("Music resumed.");
       }
-    }, 200);
+    } catch (error) {
+      setMusicStatus("Could not resume audio.");
+      console.error("Resume failed:", error);
+    }
   }
 
-  function startPreviewOnce() {
-    if (previewPlayed) return;
-    previewPlayed = true;
-
-    audio.volume = 1;
-    audio.play().then(() => {
-      previewTimeout = setTimeout(() => {
-        stopPreviewWithFade();
-      }, 9000);
-    }).catch(() => {
-      // Browser blocked playback until interaction completes elsewhere
-    });
+  function stopPlaying() {
+    clearMusicTimer();
+    pausedTime = music.currentTime;
+    stoppedByTimer = false;
+    music.pause();
+    setMusicStatus("Music stopped.");
   }
 
-  document.addEventListener("click", startPreviewOnce, { once: true });
+  async function handleFirstInteraction() {
+    if (firstInteractionHandled) return;
+    firstInteractionHandled = true;
+    await playFromStart();
+  }
 
-  musicBtn.addEventListener("click", function () {
-    clearTimeout(previewTimeout);
-    clearInterval(fadeInterval);
-    audio.volume = 1;
-    audio.currentTime = 0;
-    audio.play();
+  document.addEventListener("click", handleFirstInteraction, { once: true });
+
+  stopBtn.addEventListener("click", (event) => {
+    event.stopPropagation();
+    stopPlaying();
+  });
+
+  continueBtn.addEventListener("click", async (event) => {
+    event.stopPropagation();
+
+    if (!hasStarted) {
+      await playFromStart();
+    } else {
+      await continuePlaying();
+    }
+  });
+
+  music.addEventListener("ended", () => {
+    clearMusicTimer();
+    pausedTime = 0;
+    stoppedByTimer = false;
+    setMusicStatus("Song finished.");
   });
 </script>
 
