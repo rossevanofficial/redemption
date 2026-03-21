@@ -455,3 +455,12 @@ body::before{
       0 0 80px rgba(255,60,0,0.25);
   }
 }
+#continueBtn {
+  box-shadow: 0 0 12px rgba(255, 80, 0, 0.6);
+  transition: all 0.25s ease;
+}
+
+#continueBtn:hover {
+  box-shadow: 0 0 18px rgba(255, 100, 0, 0.9);
+  transform: translateY(-1px);
+}
