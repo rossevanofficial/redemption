@@ -222,4 +222,228 @@ document.addEventListener("DOMContentLoaded", function () {
 </script>
 
 </body>
+</html><!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Redemption — A Novel by Ross Evans</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <meta name="description"
+        content="Redemption is a dark, cinematic thriller by Ross Evans. A story of fire, choice, and the cost of doing the right thing." />
+
+  <!-- web.css is in the SAME folder as this index.html -->
+  <link rel="stylesheet" href="web.css" />
+</head>
+
+<body>
+
+<!-- =========================
+     HERO SECTION
+========================== -->
+<section
+  id="hero"
+  aria-label="Redemption hero"
+  style="--hero-img: url('assets/Redemption-Opening.png');">
+
+  <!-- Ember particles -->
+  <canvas id="embers" aria-hidden="true"></canvas>
+
+  <!-- Background layers -->
+  <div class="hero-bg" aria-hidden="true">
+    <div class="hero-smoke"></div>
+    <div class="hero-rain"></div>
+    <div class="hero-vignette"></div>
+    <div class="hero-image"></div>
+  </div>
+
+  <!-- Foreground content -->
+  <div class="hero-content">
+    <p class="hero-kicker">Written by Ross Evans</p>
+    <h1 class="hero-title">REDEMPTION</h1>
+
+    <p class="hero-coming-soon">Redemption — Coming Soon</p>
+
+    <p class="hero-tagline">
+      A dark fantasy novel about guilt, power, and the fight for redemption when death is only the beginning.
+    </p>
+
+    <div class="hero-cta">
+      <a class="btn btn-primary" href="#prologue">Read the Story</a>
+      <a class="btn btn-ghost" href="#prologue">This is where the story began</a>
+    </div>
+  </div>
+
+  <!-- Scroll cue -->
+  <div class="hero-scroll" aria-hidden="true">
+    <span></span>
+  </div>
+</section>
+
+<!-- =========================
+     PROLOGUE SECTION
+========================== -->
+<section id="prologue" class="section-prologue" aria-label="Prologue scene">
+  <div class="container reveal">
+
+    <p class="section-kicker">PROLOGUE</p>
+    <h2 class="section-title">THIS IS WHERE THE STORY BEGAN</h2>
+
+    <div class="prologue-media reveal">
+      <img
+        src="assets/French-doors.png"
+        alt="Freya, Steve, and Jack outside the French doors as Steve forces entry in the rain."
+        loading="lazy"
+      />
+      <div class="prologue-overlay" aria-hidden="true"></div>
+      <div class="prologue-caption">
+        Rain. Marble. Warm light behind glass.
+        <span class="accent">And something that already felt wrong.</span>
+      </div>
+    </div>
+
+    <div class="prologue-copy reveal">
+      <p>
+        The rain had started as a mist and turned into a slow, steady drizzle that coated everything in a thin sheen of silver. 
+        Freya stood with Steve and Jack at the rear of the two-story house, staring at the towering white-marble staircase that 
+        led from the patio down to the pool. Water streamed along the curved marble railings and dripped in clear beads from the 
+        ornate stonework, making the whole place look like it belonged in a magazine, untouched, elegant, sterile.
+      </p>
+      <p class="small">
+        It should have been beautiful. Instead, it felt wrong.
+        
+        Dark clouds smothered the moon. Rain pattered against the pool in soft, rhythmic taps.
+        Inside, several lights glowed behind tall French doors—warm, golden, alive.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<!-- =========================
+     AUDIO
+========================== -->
+<audio id="bgMusic" preload="auto">
+  <source src="assets/redemption-theme.mp3" type="audio/mpeg" />
+</audio>
+
+<script src="web.js" defer></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const audio = document.getElementById("bgMusic");
+  const musicToggleBtn = document.getElementById("musicToggleBtn");
+  const musicStopBtn = document.getElementById("musicStopBtn");
+  const audioStatus = document.getElementById("audioStatus");
+
+  let previewPlayed = false;
+  let previewTimeout = null;
+  let fadeInterval = null;
+
+  function updateStatus(message) {
+    audioStatus.textContent = message;
+  }
+
+  function setPlayVisual() {
+    musicToggleBtn.innerHTML = '<span class="audio-icon">🔥</span>';
+  }
+
+  function setPauseVisual() {
+    musicToggleBtn.innerHTML = '<span class="audio-icon">⏸</span>';
+  }
+
+  function clearAudioTimers() {
+    if (previewTimeout) clearTimeout(previewTimeout);
+    if (fadeInterval) clearInterval(fadeInterval);
+  }
+
+  function stopAudio() {
+    clearAudioTimers();
+    audio.pause();
+    audio.currentTime = 0;
+    audio.volume = 1;
+    setPlayVisual();
+    updateStatus("Music stopped");
+  }
+
+  function fadeOutAndStop() {
+    clearAudioTimers();
+
+    fadeInterval = setInterval(() => {
+      if (audio.volume > 0.1) {
+        audio.volume -= 0.1;
+      } else {
+        clearInterval(fadeInterval);
+        audio.pause();
+        audio.currentTime = 0;
+        audio.volume = 1;
+        setPlayVisual();
+        updateStatus("Preview ended");
+      }
+    }, 180);
+  }
+
+  async function startPreview() {
+    if (previewPlayed) return;
+
+    previewPlayed = true;
+    clearAudioTimers();
+    audio.currentTime = 0;
+    audio.volume = 1;
+    audio.loop = false;
+
+    try {
+      await audio.play();
+      setPauseVisual();
+      updateStatus("Preview playing");
+
+      previewTimeout = setTimeout(() => {
+        fadeOutAndStop();
+      }, 10000);
+    } catch (error) {
+      console.error(error);
+      updateStatus("Tap fire to play");
+    }
+  }
+
+  async function toggleMusic(event) {
+    event.stopPropagation();
+    clearAudioTimers();
+
+    try {
+      if (audio.paused) {
+        audio.volume = 1;
+        audio.loop = true;
+        await audio.play();
+        setPauseVisual();
+        updateStatus("Music playing");
+      } else {
+        audio.pause();
+        setPlayVisual();
+        updateStatus("Music paused");
+      }
+    } catch (error) {
+      console.error(error);
+      updateStatus("Could not play audio");
+    }
+  }
+
+  function handleFirstInteraction() {
+    startPreview();
+  }
+
+  document.addEventListener("click", handleFirstInteraction, { once: true });
+  document.addEventListener("keydown", handleFirstInteraction, { once: true });
+  document.addEventListener("touchstart", handleFirstInteraction, { once: true });
+
+  musicToggleBtn.addEventListener("click", toggleMusic);
+
+  musicStopBtn.addEventListener("click", function (event) {
+    event.stopPropagation();
+    stopAudio();
+  });
+});
+</script>
+
+</body>
 </html>
