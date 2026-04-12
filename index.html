@@ -45,7 +45,7 @@
     </p>
 
     <div class="hero-cta">
-      <a class="btn btn-primary" href="#prologue">Read the Story</a>
+     <a class="btn btn-primary" href="#prologue" id="readStoryBtn">Read the Story</a>
       <<a class="btn btn-ghost" href="assets/Prologue_Final_DevEdit.pdf" target="_blank" rel="noopener noreferrer">This is where the story began</a>
     </div>
 
@@ -122,6 +122,7 @@
   const stopBtn = document.getElementById("stopBtn");
   const continueBtn = document.getElementById("continueBtn");
   const musicStatus = document.getElementById("musicStatus");
+  const readStoryBtn = document.getElementById("readStoryBtn");
 
   let stopTimer = null;
   let pausedTime = 0;
@@ -213,6 +214,19 @@
       await playFromStart();
     } else {
       await continuePlaying();
+    }
+  });
+
+  readStoryBtn.addEventListener("click", (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+
+    const prologueSection = document.getElementById("prologue");
+    if (prologueSection) {
+      prologueSection.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      });
     }
   });
 
