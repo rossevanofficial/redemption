@@ -2,232 +2,316 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Redemption Official | Dark Fantasy Novel by Ross Evans</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Official website for Redemption, a dark fantasy novel by Ross Evans. Read the prologue and order the dark thriller online." />
-  <meta name="google-site-verification" content="GgcsU5TSqx_iiOLmi4AKx3gKz7jphAbe_rA1Gs77m50" />
+  <title>Trading Existence | An Epic Fantasy/Sci-Fantasy Book Series</title>
+  <meta name="description" content="Trading Existence is an epic fantasy/sci-fantasy series by Ross Evans. Discover the books, world, characters, and where to start." />
+  <meta name="theme-color" content="#0b0f19" />
 
-  <!-- web.css is in the SAME folder as this index.html -->
-  <link rel="stylesheet" href="web.css" />
+  <!-- Open Graph Social Metadata -->
+  <meta property="og:title" content="Trading Existence | Book Series" />
+  <meta property="og:description" content="An epic fantasy/sci-fantasy saga where worlds collide and purpose is forged in war." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.tradingexistence.com" />
+  <meta property="og:image" content="https://www.tradingexistence.com/assets/og-trading-existence.jpg" />
+  <link rel="canonical" href="https://www.tradingexistence.com" />
+  <meta name="google-site-verification" content="iPwMWbgzAB0CC0byJ2a4cqarIZNyyMqUgxhaTy_H5aY" />
 
-  <!-- Privacy-friendly analytics by Plausible -->
-  <script async src="https://plausible.io/js/pa-Z1NOgBtorKqkBrkFaJy6d.js"></script>
+  <!-- MailerLite Universal (Singular Instance) -->
   <script>
-    window.plausible=window.plausible||function(){
-      (plausible.q=plausible.q||[]).push(arguments)
-    },
-    plausible.init=plausible.init||function(i){
-      plausible.o=i||{}
-    };
+    (function(w,d,e,u,f,l,n){
+      w[f]=w[f]||function(){(w[f].q=w[f].q||[]).push(arguments);};
+      l=d.createElement(e);l.async=1;l.src=u;
+      n=d.getElementsByTagName(e)[0];n.parentNode.insertBefore(l,n);
+    })(window,document,'script','https://assets.mailerlite.com/js/universal.js','ml');
+    ml('account', '2004237');
+  </script>
 
+  <!-- Privacy-friendly analytics by Plausible (Singular Instance) -->
+  <script async src="https://plausible.io/js/pa-g4r1lLwu8DOuXZjOk7ABH.js"></script>
+  <script>
+    window.plausible = window.plausible || function () {
+      (plausible.q = plausible.q || []).push(arguments)
+    };
     plausible.init();
   </script>
 
-  <!-- Structured Data JSON-LD Schema Graph -->
-  <script type="application/ld+json">
-  {
-    "@context":"https://schema.org",
-    "@graph":[
-      {
-        "@type":"Book",
-        "@id":"https://redemptionofficial.com/#book",
-        "name":"Redemption",
-        "author":{
-          "@type":"Person",
-          "@id": "https://rossevansofficial.com",
-          "name":"Ross Evans"
-        },
-        "genre":[
-          "Dark Fantasy"
-        ],
-        "url":"https://redemptionofficial.com/",
-        "image":"https://redemptionofficial.com/assets/redemption-cover.jpg"
-      },
-      {
-        "@type":"WebSite",
-        "url":"https://redemptionofficial.com/",
-        "name":"Redemption Official"
-      }
-    ]
-  }
-  </script>
-</head>
+<style>
+:root {
+  --bg: #070a12;
+  --panel: rgba(255, 255, 255, 0.06);
+  --panel2: rgba(255, 255, 255, 0.09);
+  --text: rgba(255, 255, 255, 0.92);
+  --muted: rgba(255, 255, 255, 0.68);
+  --brand: #8bd6ff;
+  --brand2: #b892ff;
+  --accent: #ffd28b;
+  --danger: #ff6b6b;
+  --shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+  --radius: 22px;
+  --radius2: 16px;
+  --max: 1180px;
+  --border: rgba(255, 255, 255, 0.10);
+  --border2: rgba(255, 255, 255, 0.14);
+  --blur: 18px;
+  --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+    "Courier New", monospace;
+  --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial,
+    "Apple Color Emoji", "Segoe UI Emoji";
+}
 
-<body>
+* {
+  box-sizing: border-box;
+}
 
-<!-- =========================
-     HERO SECTION
-========================== -->
-<section
-  id="hero"
-  aria-label="Redemption hero"
-  style="--hero-img: url('assets/Redemption-Opening.png');">
+html,
+body {
+  height: 100%;
+}
 
-  <!-- Ember particles -->
-  <canvas id="embers" aria-hidden="true"></canvas>
+body {
+  margin: 0;
+  font-family: var(--sans);
+  color: var(--text);
+  background: radial-gradient(1100px 700px at 15% 10%, rgba(139, 214, 255, 0.20), transparent 55%),
+    radial-gradient(900px 600px at 85% 20%, rgba(184, 146, 255, 0.18), transparent 55%),
+    radial-gradient(1200px 800px at 50% 85%, rgba(255, 210, 139, 0.10), transparent 60%),
+    linear-gradient(180deg, #050812, #060a14 40%, #04060e);
+  overflow-x: hidden;
+}
 
-  <!-- Background layers -->
-  <div class="hero-bg" aria-hidden="true">
-    <div class="hero-smoke"></div>
-    <div class="hero-rain"></div>
-    <div class="hero-vignette"></div>
-    <div class="hero-image"></div>
-  </div>
+a {
+  color: inherit;
+  text-decoration: none;
+}
 
-  <!-- Foreground content -->
-  <div class="hero-content">
-    <p class="hero-kicker">Written by Ross Evans</p>
-    <h1 class="hero-title">REDEMPTION</h1>
+a:hover {
+  text-decoration: none;
+}
 
-     <p class="hero-Order-now!">Redemption — Order-now!</p>
+.container {
+  width: min(var(--max), calc(100% - 48px));
+  margin: 0 auto;
+}
 
-    <p class="hero-tagline">
-      A dark fantasy novel about guilt, power, and the fight for redemption when death is only the beginning.
-    </p>
-    <div style="margin-top: 24px;">
-  <a class="btn btn-primary"
-     href="https://a.co/d/01h3oCqe"
-     target="_blank"
-     rel="noopener noreferrer">
-    Order Redemption
-  </a>
-</div>
+/* Top nav */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  backdrop-filter: blur(var(--blur));
+  -webkit-backdrop-filter: blur(var(--blur));
+  background: rgba(7, 10, 18, 0.55);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
 
-   
-<div class="hero-cta">
-  <a class="btn btn-primary" href="#prologue" id="readStoryBtn">Read the Story</a>
-  <a class="btn btn-ghost" href="assets/Prologue_Final_DevEdit.pdf" target="_blank" rel="noopener noreferrer">This is where the story began</a>
-</div>
+.nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 0;
+}
 
-  <a class="btn btn-ghost" href="#updates">
-    Latest Updates
-  </a>
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+}
+
+.sigil {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, rgba(139, 214, 255, 0.95), rgba(184, 146, 255, 0.95));
+  box-shadow: 0 10px 25px rgba(139, 214, 255, 0.20);
+  position: relative;
+  overflow: hidden;
+}
+
+.sigil:before {
+  content: "";
+  position: absolute;
+  inset: -40% -40% auto auto;
+  width: 100px;
+  height: 100px;
+  background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.9), transparent 60%);
+  transform: rotate(25deg);
+  opacity: 0.5;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.nav-links a {
+  padding: 10px 12px;
+  border-radius: 12px;
+  color: var(--muted);
+  border: 1px solid transparent;
+  transition: all 180ms ease;
+  font-size: 14px;
+}
+
+.nav-links a:hover {
+  color: var(--text);
+  border-color: rgba(255, 255, 255, 0.10);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 14px;
+  border-radius: 14px;
+  font-weight: 650;
+  letter-spacing: 0.2px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: linear-gradient(135deg, rgba(139, 214, 255, 0.16), rgba(184, 146, 255, 0.14));
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.28);
+  transition: transform 160ms ease, border-color 160ms ease;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.cta:hover {
+  transform: translateY(-1px);
+  border-color: rgba(255, 255, 255, 0.24);
+}
+
+/* Shop Dropdown */
+.shop-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.shop-toggle {
+  cursor: pointer;
+}
+
+.shop-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  min-width: 180px;
+  display: none;
+  flex-direction: column;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.14);
+  background: rgba(7,10,18,0.95);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  z-index: 999;
+}
+
+.shop-menu.show {
+  display: flex;
+}
+
+.shop-menu a {
+  padding: 12px 16px;
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 600;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+.shop-menu a:last-child {
+  border-bottom: none;
+}
+
+.shop-menu a:hover {
+  background: rgba(255,255,255,0.06);
+}
 
 
-    <!-- MUSIC CONTROLS -->
- <div class="hero-cta" style="margin-top: 12px; flex-wrap: wrap;">
-  <button class="btn btn-primary" type="button" id="continueBtn">🔥 Continue</button>
-  <button class="btn btn-ghost" type="button" id="stopBtn">⏹ Stop</button>
-</div>
+/* =========================
+   Collapsible Mobile Nav
+   (desktop stays the same)
+   ========================= */
+.nav-toggle {
+  display: none; /* enabled only on mobile */
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.04);
+  color: var(--text);
+  cursor: pointer;
+  font-weight: 650;
+  font-size: 14px;
+}
 
-    <p id="musicStatus" style="margin-top: 10px;">
-      Click anywhere on the page to play the theme for 15 seconds.
-    </p>
-  </div>
+.nav-toggle:hover {
+  border-color: rgba(255,255,255,0.22);
+  background: rgba(255,255,255,0.06);
+}
 
-  <!-- Scroll cue -->
-  <div class="hero-scroll" aria-hidden="true">
-    <span></span>
-  </div>
-</section>
+.nav-toggle-icon {
+  width: 18px;
+  height: 12px;
+  display: inline-block;
+  position: relative;
+}
 
-<!-- =========================
-     PROLOGUE SECTION
-========================== -->
-<section id="prologue" class="section-prologue" aria-label="Prologue scene">
-  <div class="container reveal">
+.nav-toggle-icon::before,
+.nav-toggle-icon::after,
+.nav-toggle-icon span {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  border-radius: 2px;
+  background: rgba(255,255,255,0.86);
+}
 
-    <p class="section-kicker">PROLOGUE</p>
-    <h2 class="section-title">THIS IS WHERE THE STORY BEGAN</h2>
+.nav-toggle-icon::before { top: 0; }
+.nav-toggle-icon::after { bottom: 0; }
+.nav-toggle-icon span { top: 5px; }
 
-    <div class="prologue-media reveal">
-      <img
-        src="assets/French-doors.png"
-        alt="Official prologue scene illustration for the dark fantasy novel Redemption by author Ross Evans."
-        loading="lazy"
-      />
-      <div class="prologue-overlay" aria-hidden="true"></div>
-      <div class="prologue-caption">
-        Rain. Marble. Warm light behind glass.
-        <span class="accent">And something that already felt wrong.</span>
-      </div>
-    </div>
-<div class="prologue-copy reveal">
-  <div class="prologue-scrollbox" id="prologueScrollbox">
+.nav-menu {
+  display: flex; /* desktop shows normally */
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
 
-    <p><strong>PROLOGUE</strong></p>
+/* Hero */
+.hero {
+  padding: 70px 0 36px;
+  position: relative;
+}
 
-    <p>The rain gathered slowly, settling into a steady drizzle that coated the marble in a thin, reflective sheen. Water traced the curves of the staircase and gathered along the edges before slipping free, dripping in quiet, uneven intervals. The house stood open and exposed to it, untouched and pristine, as if nothing had ever gone wrong here.</p>
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1.35fr 0.9fr;
+  gap: 24px;
+  align-items: center;
+}
 
-    <p>Freya stood with Steve and Jack at the rear of the house, her eyes fixed on the staircase leading down toward the pool. The white stone held the light in a way that should have felt clean.</p>
+.kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--muted);
+  font-size: 13px;
+}
 
-    <p>It didn’t.</p>
-
-    <p>The weight in the air pressed against her chest without explanation. The clouds had swallowed the moon, leaving only a low, suffocating darkness overhead. Rain tapped steadily against the pool, the sound repeating without pause, soft enough to ignore, constant enough that it couldn’t be.</p>
-
-    <p>Light spilled from inside through the tall French doors, warm and golden.</p>
-
-    <p>Wrong.</p>
-
-    <p>“Steve…” Her voice dragged, slow and uneven, like it had to force its way out. “You sure there’s nobody home?”</p>
-
-    <p>Jack answered immediately, sharp and irritated. “I already checked. No one’s here.”</p>
-
-    <p>Freya didn’t look at him. She kept staring at the lights.</p>
-
-    <p>“They wouldn’t just leave everything on,” she said, though the thought didn’t feel fully formed even as she spoke it.</p>
-
-    <p>Steve turned, his expression tightening. “Just shut up.”</p>
-
-    <p>He reached into his coat and pulled out a small square of foil, tossing it toward her without looking.</p>
-
-    <p>It slipped through her fingers and landed in the shallow water at her feet.</p>
-
-    <p>Her body reacted before her thoughts caught up.</p>
-
-    <p>She dropped immediately, hands pressing against the wet stone as she searched for it, her breathing already quickening. The fading edge of her high left something hollow behind, something that pulled at her from the inside.</p>
-
-    <p>She found the foil and opened it with shaking hands. The straw inside was blackened and warped from use, its shape and texture already known to her hands in a way that bypassed thought and went straight to need.</p>
-
-    <p>She worked without thinking, bringing the flame beneath the foil and holding it there as the heat built and the smoke began to curl upward toward her.</p>
-
-    <p>She inhaled deeply, holding it longer than she should have.</p>
-
-    <p>The world softened.</p>
-
-    <p>Edges blurred. Sound dulled. The tightness in her chest loosened just enough to breathe through.</p>
-
-    <p>Steve’s voice continued somewhere behind her, rising and falling with a frustration she no longer had to carry.</p>
-
-    <p>“These people don’t give a damn about anyone but themselves,” he said. “They take everything and leave the rest of us with nothing.”</p>
-
-    <p>Jack murmured something in agreement.</p>
-
-    <p>Freya let it pass through her.</p>
-
-    <p>A hand grabbed her arm.</p>
-
-    <p>“Move.”</p>
-
-    <p>She let herself be pulled upright, her balance lagging behind the motion. The ground shifted slightly beneath her before settling again.</p>
-
-    <p>Jack moved ahead. Steve wrapped his hand and drove his fist through the glass.</p>
-
-    <p>The sound cracked through the space.</p>
-
-    <p>Freya flinched late.</p>
-
-    <p>Steve reached in, unlocked the door, and stepped inside.</p>
-
-    <p>She followed.</p>
-
-    <p>They had barely entered when the voice came from the stairwell.</p>
-
-    <p>“Who are you? What are you doing in my house?”</p>
-
-    <p>The words reached her.</p>
-
-    <p>They didn’t stay.</p>
-
-    <p>Movement followed. Fast. Heavy.</p>
-
-    <p>A crash.</p>
-
-    <p>A scream.</p>
-
-    <p>Something struck the ground hard enough that the vibration carried through her feet.</p>
-  </div>
-</div>
-</section>
-</body>
-</html>
+.dot {
+  width: 8px;
+  height: 8px;
