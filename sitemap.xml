@@ -1,11 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
+  <!-- Primary Landing Page & Book Metadata Hub -->
   <url>
-    <loc>https://www.redemptionofficial.com/</loc>
-    <lastmod>2026-08-05</lastmod>
+    <loc>https://redemptionofficial.com/</loc>
+    <lastmod>2026-10-03</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
+    <priority>1.00</priority>
+  </url>
+  
+  <!-- Printable Prologue Document Assets -->
+  <url>
+    <loc>https://redemptionofficial.com</loc>
+    <lastmod>2026-10-03</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
   </url>
 
 </urlset>
