@@ -1,7 +1,7 @@
 /* ==========================================
    Redemption — web.js
-   Parallax + embers + scroll reveals
-========================================== */
+   Parallax + embers + scroll reveals + audio
+========================================= */
 
 /* ---------------------------
    Parallax (hero background)
@@ -127,4 +127,54 @@
   resize();
   init();
   draw();
+})();
+
+/* ---------------------------
+   Cinematic Audio Framework
+--------------------------- */
+(function(){
+  const audio = document.getElementById('themeAudio');
+  const continueBtn = document.getElementById('continueBtn');
+  const stopBtn = document.getElementById('stopBtn');
+  const statusText = document.getElementById('musicStatus');
+  let secondaryTimeout = null;
+
+  if (!audio) return;
+
+  // Global document interaction play (runs for 15 seconds)
+  function initialInteractionPlay() {
+    audio.play().then(() => {
+      statusText.textContent = "Playing preview theme...";
+      document.removeEventListener('click', initialInteractionPlay);
+      
+      // Auto-stop preview after 15 seconds
+      secondaryTimeout = setTimeout(() => {
+        audio.pause();
+        statusText.textContent = "Preview finished. Click '🔥 Continue' to keep listening.";
+      }, 15000);
+    }).catch(err => console.log("Audio autoplay prevented, waiting for user click."));
+  }
+
+  // Active listener for background ambient interaction
+  document.addEventListener('click', initialInteractionPlay);
+
+  // Manual explicit control overrides
+  if (continueBtn) {
+    continueBtn.addEventListener('click', (e) => {
+      e.stopPropagation(); // Stop global interaction reset
+      clearTimeout(secondaryTimeout);
+      audio.play();
+      statusText.textContent = "Looping official novel theme track.";
+    });
+  }
+
+  if (stopBtn) {
+    stopBtn.addEventListener('click', (e) => {
+      e.stopPropagation(); // Stop global interaction reset
+      clearTimeout(secondaryTimeout);
+      audio.pause();
+      audio.currentTime = 0;
+      statusText.textContent = "Audio playback stopped.";
+    });
+  }
 })();
