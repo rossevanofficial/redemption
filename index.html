@@ -20,6 +20,188 @@
       plausible.o=i||{}
     };
 
+    plausible.init();
+  </script>
+
+  <!-- Structured Data JSON-LD Schema Graph -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@graph":[
+      {
+        "@type":"Book",
+        "@id":"https://redemptionofficial.com/#book",
+        "name":"Redemption",
+        "author":{
+          "@type":"Person",
+          "@id": "https://rossevansofficial.com",
+          "name":"Ross Evans"
+        },
+        "genre":[
+          "Dark Fantasy"
+        ],
+        "url":"https://redemptionofficial.com/",
+        "image":"https://redemptionofficial.com/assets/redemption-cover.jpg"
+      },
+      {
+        "@type":"WebSite",
+        "url":"https://redemptionofficial.com/",
+        "name":"Redemption Official"
+      }
+    ]
+  }
+  </script>
+</head>
+
+<body>
+
+<!-- =========================
+     HERO SECTION
+========================== -->
+<section
+  id="hero"
+  aria-label="Redemption hero"
+  style="--hero-img: url('assets/Redemption-Opening.png');">
+
+  <!-- Ember particles -->
+  <canvas id="embers" aria-hidden="true"></canvas>
+
+  <!-- Background layers -->
+  <div class="hero-bg" aria-hidden="true">
+    <div class="hero-smoke"></div>
+    <div class="hero-rain"></div>
+    <div class="hero-vignette"></div>
+    <div class="hero-image"></div>
+  </div>
+
+  <!-- Foreground content -->
+  <div class="hero-content">
+    <p class="hero-kicker">Written by Ross Evans</p>
+    <h1 class="hero-title">REDEMPTION</h1>
+
+     <p class="hero-Order-now!">Redemption — Order-now!</p>
+
+    <p class="hero-tagline">
+      A dark fantasy novel about guilt, power, and the fight for redemption when death is only the beginning.
+    </p>
+    <div style="margin-top: 24px;">
+  <a class="btn btn-primary"
+     href="https://a.co/d/01h3oCqe"
+     target="_blank"
+     rel="noopener noreferrer">
+    Order Redemption
+  </a>
+</div>
+
+   
+<div class="hero-cta">
+ <a class="btn btn-primary" href="#prologue" id="readStoryBtn">Read the Story</a>
+  <a class="btn btn-ghost" href="assets/Prologue_Final_DevEdit.pdf" target="_blank" rel="noopener noreferrer">This is where the story began</a>
+</div>
+
+  <a class="btn btn-ghost" href="#updates">
+    Latest Updates
+  </a>
+
+
+    <!-- MUSIC CONTROLS -->
+ <div class="hero-cta" style="margin-top: 12px; flex-wrap: wrap;">
+  <button class="btn btn-primary" type="button" id="continueBtn">🔥 Continue</button>
+  <button class="btn btn-ghost" type="button" id="stopBtn">⏹ Stop</button>
+</div>
+
+    <p id="musicStatus" style="margin-top: 10px;">
+      Click anywhere on the page to play the theme for 15 seconds.
+    </p>
+  </div>
+
+  <!-- Scroll cue -->
+  <div class="hero-scroll" aria-hidden="true">
+    <span></span>
+  </div>
+</section>
+
+<!-- =========================
+     PROLOGUE SECTION
+========================== -->
+<section id="prologue" class="section-prologue" aria-label="Prologue scene">
+  <div class="container reveal">
+
+    <p class="section-kicker">PROLOGUE</p>
+    <h2 class="section-title">THIS IS WHERE THE STORY BEGAN</h2>
+
+    <div class="prologue-media reveal">
+      <img
+        src="assets/French-doors.png"
+        alt="Official prologue scene illustration for the dark fantasy novel Redemption by author Ross Evans."
+        loading="lazy"
+      />
+      <div class="prologue-overlay" aria-hidden="true"></div>
+      <div class="prologue-caption">
+        Rain. Marble. Warm light behind glass.
+        <span class="accent">And something that already felt wrong.</span>
+      </div>
+    </div>
+<div class="prologue-copy reveal">
+  <div class="prologue-scrollbox" id="prologueScrollbox">
+    <p><strong>PROLOGUE</strong></p>
+    <p><em>Note: The full text of the prologue involving Freya, Steve, and Jack has been abbreviated here for formatting. You can find the complete narrative content in the source files.</em></p>
+  </div>
+</div>
+</section>
+
+<section id="updates" class="section-updates" aria-label="Latest book updates">
+  <div class="container reveal">
+    <p class="section-kicker">UPDATES</p>
+    <h2 class="section-title">LATEST NEWS</h2>
+    
+    <div class="update-grid">
+      <div class="update-card reveal">
+        <span class="update-date">May 2026</span>
+        <h3>Redemption is available for pre-order</h3>
+        <p>The journey begins here. Redemption is now available to buy, with more story updates, behind-the-scenes material, and character features coming soon.</p>
+      </div>
+      
+      <div class="update-card reveal">
+        <span class="update-date">Coming Soon</span>
+        <h3>Character reveals</h3>
+        <p>New visuals and character spotlights from the world of Redemption will be added as release day approaches.</p>
+      </div>
+      
+      <div class="update-card reveal">
+        <span class="update-date">Behind the Story</span>
+        <h3>Music, lore, and cinematic clips</h3>
+        <p>Theme music, lore fragments, and cinematic teaser content will continue to expand the world beyond the page.</p>
+      </div>
+    </div>
+    <audio id="themeAudio" src="assets/audio/redemption-theme.mp3" preload="auto" loop></audio>
+  </div>
+</section>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Redemption Official | Dark Fantasy Novel by Ross Evans</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Official website for Redemption, a dark fantasy novel by Ross Evans. Read the prologue and order the dark thriller online." />
+  <meta name="google-site-verification" content="GgcsU5TSqx_iiOLmi4AKx3gKz7jphAbe_rA1Gs77m50" />
+
+  <!-- web.css is in the SAME folder as this index.html -->
+  <link rel="stylesheet" href="web.css" />
+
+  <!-- Privacy-friendly analytics by Plausible -->
+  <script async src="https://plausible.io/js/pa-Z1NOgBtorKqkBrkFaJy6d.js"></script>
+  <script>
+    window.plausible=window.plausible||function(){
+      (plausible.q=plausible.q||[]).push(arguments)
+    },
+    plausible.init=plausible.init||function(i){
+      plausible.o=i||{}
+    };
+
     plausible.init()
  <script type="application/ld+json">
 {
