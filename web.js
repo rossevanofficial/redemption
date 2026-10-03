@@ -1,24 +1,37 @@
-/* ==========================================
-   Redemption — web.js
-   Parallax + embers + scroll reveals + audio
-========================================= */
+/* ==========================================================
+   Redemption — Upgraded Cinematic web.js
+   Inertia Parallax Camera Engine + Organic Thermal Embers
+========================================================== */
 
 /* ---------------------------
-   Parallax (hero background)
+   Smooth Inertia Camera Tracking
 --------------------------- */
 (function(){
   const bg = document.querySelector('.hero-bg');
   const heroImage = document.querySelector('.hero-image');
+  
+  let targetY = 0;
+  let currentY = 0;
+  const ease = 0.08; // Lower value = smoother cinematic gliding
 
-  function onScroll(){
-    const y = window.scrollY || 0;
-    if (bg) bg.style.transform = `translateY(${y * 0.10}px)`;
-    if (heroImage) heroImage.style.transform =
-      `translateY(${y * 0.16}px) scale(1.02)`;
+  window.addEventListener('scroll', () => {
+    targetY = window.scrollY || 0;
+  }, { passive: true });
+
+  function updateCamera() {
+    // Linear interpolation loop to create lens inertia
+    currentY += (targetY - currentY) * ease;
+    
+    // Limits processing calculations if numbers are fractional
+    if (Math.abs(targetY - currentY) > 0.01) {
+      if (bg) bg.style.transform = `translate3d(0, ${currentY * 0.08}px, 0)`;
+      if (heroImage) heroImage.style.transform = `translate3d(0, ${currentY * 0.12}px, 0) scale(1.03)`;
+    }
+    
+    requestAnimationFrame(updateCamera);
   }
-
-  window.addEventListener('scroll', onScroll, { passive:true });
-  onScroll();
+  
+  updateCamera();
 })();
 
 /* ---------------------------
@@ -28,7 +41,6 @@
   const revealItems = document.querySelectorAll('.reveal');
 
   if (!('IntersectionObserver' in window)) {
-    // Fallback: just show everything
     revealItems.forEach(el => el.classList.add('is-visible'));
     return;
   }
@@ -52,7 +64,7 @@
 })();
 
 /* ---------------------------
-   Embers (lightweight canvas)
+   Embers (Organic Thermal Particle Engine)
 --------------------------- */
 (function(){
   const canvas = document.getElementById('embers');
@@ -83,7 +95,7 @@
       vx: rand(-0.08,0.08),
       life: rand(0.4,1),
       flicker: rand(0.6,1),
-      hue: rand(18,38)
+      hue: rand(18,34) // Warm ember thermal spectrum spectrum range
     };
   }
 
@@ -104,14 +116,18 @@
         Object.assign(p, makeParticle());
       }
 
-      const alpha = 0.18 * p.life * p.flicker;
-      const g = ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,p.r*6);
-      g.addColorStop(0, `hsla(${p.hue},80%,65%,${alpha})`);
-      g.addColorStop(1, `hsla(${p.hue},80%,65%,0)`);
+      // Organic canvas pulsing wave logic
+      const alpha = (0.22 * p.life * p.flicker) * (Math.sin(Date.now() * 0.004 * p.flicker) * 0.3 + 0.7);
+      const sizeModifier = p.r * (1 + Math.sin(Date.now() * 0.008 + p.x) * 0.15);
+
+      const g = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, sizeModifier * 5);
+      g.addColorStop(0, `hsla(${p.hue}, 85%, 60%, ${alpha})`);
+      g.addColorStop(0.3, `hsla(${p.hue - 4}, 80%, 45%, ${alpha * 0.6})`); // Multi-tone heat signatures
+      g.addColorStop(1, `hsla(${p.hue}, 80%, 45%, 0)`);
 
       ctx.fillStyle = g;
       ctx.beginPath();
-      ctx.arc(p.x,p.y,p.r*6,0,Math.PI*2);
+      ctx.arc(p.x, p.y, sizeModifier * 5, 0, Math.PI * 2);
       ctx.fill();
     }
 
@@ -141,40 +157,36 @@
 
   if (!audio) return;
 
-  // Global document interaction play (runs for 15 seconds)
   function initialInteractionPlay() {
     audio.play().then(() => {
-      statusText.textContent = "Playing preview theme...";
+      if (statusText) statusText.textContent = "Playing preview theme...";
       document.removeEventListener('click', initialInteractionPlay);
       
-      // Auto-stop preview after 15 seconds
       secondaryTimeout = setTimeout(() => {
         audio.pause();
-        statusText.textContent = "Preview finished. Click '🔥 Continue' to keep listening.";
+        if (statusText) statusText.textContent = "Preview finished. Click '🔥 Continue' to keep listening.";
       }, 15000);
-    }).catch(err => console.log("Audio autoplay prevented, waiting for user click."));
+    }).catch(err => console.log("Audio autoplay restricted by browser layout permissions."));
   }
 
-  // Active listener for background ambient interaction
   document.addEventListener('click', initialInteractionPlay);
 
-  // Manual explicit control overrides
   if (continueBtn) {
     continueBtn.addEventListener('click', (e) => {
-      e.stopPropagation(); // Stop global interaction reset
+      e.stopPropagation(); 
       clearTimeout(secondaryTimeout);
       audio.play();
-      statusText.textContent = "Looping official novel theme track.";
+      if (statusText) statusText.textContent = "Looping official novel theme track.";
     });
   }
 
   if (stopBtn) {
     stopBtn.addEventListener('click', (e) => {
-      e.stopPropagation(); // Stop global interaction reset
+      e.stopPropagation(); 
       clearTimeout(secondaryTimeout);
       audio.pause();
       audio.currentTime = 0;
-      statusText.textContent = "Audio playback stopped.";
+      if (statusText) statusText.textContent = "Audio playback stopped.";
     });
   }
 })();
